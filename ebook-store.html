@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kalpvruksh AI E-Book Store</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <a href="#" class="logo-with-whatsapp">
+                <span class="logo-img-wrapper">
+                    <img src="WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg" alt="Kalpvruksh AI Logo" class="logo-img">
+                </span>
+                <span class="logo-text">Kalpvruksh AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="ebook-store.html" class="active">E-Book Store</a>
+                <a href="index.html#how-it-works">How It Works</a>
+                <a href="index.html#pricing">Pricing</a>
+                <a href="index.html#chatbot">AI Chatbot</a>
+            </div>
+            <div class="nav-actions">
+                <span id="cart-count" style="margin-right:16px; font-weight:600;">Cart: <span id="cart-items">0</span></span>
+                <a href="#" class="login-btn">Log In</a>
+                <a href="index.html" class="cta-button primary">Try Free</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Promotional Banner -->
+        <section class="promo-banner container">
+            <p>🔥 Special Offer: Buy 2 e-books, Get 1 FREE! Limited time only.</p>
+        </section>
+
+        <!-- Referral System Section -->
+
+        <!-- Hero Section -->
+        <section id="ebook-hero" class="container">
+            <h1>Master AI with Our Expert E-Books</h1>
+            <p class="subtitle">Explore strategic playbooks, prompt packs, and in-depth AI guides.</p>
+        </section>
+
+        <!-- Featured Bestsellers -->
+        <section id="featured" class="container">
+            <h2>Featured Bestsellers</h2>
+            <div class="book-grid">
+                <div class="book-card" data-id="1" data-title="The Prompt Engineer's Handbook" data-author="Alex Chen" data-price="₹199" data-desc="A comprehensive guide to prompt engineering for AI." data-pages="120" data-size="2.4 MB" data-sample="Kalpvruksh%20AI%20-%20Win%20with%20AI-Powered%20Email%20Prompts.pdf" data-category="prompt" tabindex="0">
+                    <div class="book-image-placeholder"></div>
+                    <h3>The Prompt Engineer's Handbook</h3>
+                    <p class="book-author">By Alex Chen</p>
+                    <p class="book-price">₹199</p>
+                    <button class="cta-button primary open-modal-btn">View Details</button>
+                </div>
+                <div class="book-card" data-id="2" data-title="AI for Indian Businesses" data-author="Priya Sharma" data-price="₹299" data-desc="Strategies and case studies for AI adoption in Indian businesses." data-pages="98" data-size="1.8 MB" data-sample="sample-ai-india.pdf" data-category="strategy" tabindex="0">
+                    <div class="book-image-placeholder"></div>
+                    <h3>AI for Indian Businesses</h3>
+                    <p class="book-author">By Priya Sharma</p>
+                    <p class="book-price">₹299</p>
+                    <button class="cta-button primary open-modal-btn">View Details</button>
+                </div>
+                <div class="book-card" data-id="3" data-title="Sales Automation Playbook" data-author="Rahul Singh" data-price="₹249" data-desc="Automate your sales process with proven AI strategies." data-pages="110" data-size="2.1 MB" data-sample="#" data-category="sales" tabindex="0">
+                    <div class="book-image-placeholder"></div>
+                    <h3>Sales Automation Playbook</h3>
+                    <p class="book-author">By Rahul Singh</p>
+                    <p class="book-price">₹249</p>
+                    <button class="cta-button primary open-modal-btn">View Details</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Filters -->
+        <section class="container filters-section">
+            <input type="text" id="searchInput" placeholder="Search for books..." aria-label="Search books" />
+            <select id="categoryFilter" aria-label="Filter by category">
+                <option value="">All Categories</option>
+                <option value="prompt">Prompt Engineering</option>
+                <option value="strategy">AI Strategy</option>
+                <option value="sales">Sales Automation</option>
+            </select>
+        </section>
+
+        <!-- Customer Reviews -->
+        <section id="reviews" class="container">
+            <h2>Customer Reviews</h2>
+            <div class="review-grid" id="staticReviews">
+                <div class="review-card">
+                    <p>"The prompt engineering guide helped me close deals faster. Highly recommended!"</p>
+                    <strong>- Nisha Kumar</strong>
+                </div>
+                <div class="review-card">
+                    <p>"Clear, concise, and practical advice. The best sales automation book I've read."</p>
+                    <strong>- Arjun Patel</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Signup -->
+        <section class="container newsletter">
+            <h3>Stay Updated With New Releases & Offers</h3>
+            <form id="newsletter-form" aria-label="Subscribe to newsletter">
+                <input type="email" id="emailInput" placeholder="Enter your email" required />
+                <button type="submit" class="cta-button primary">Subscribe</button>
+            </form>
+            <p id="newsletterMessage" role="alert" aria-live="polite"></p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="container faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq1" id="faq1button">
+                    What file formats do I get?
+                </button>
+                <div id="faq1" class="faq-answer" role="region" aria-labelledby="faq1button" hidden>
+                    <p>You receive PDF and EPUB formats compatible with all popular readers.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq2" id="faq2button">
+                    How will I receive my e-book after purchase?
+                </button>
+                <div id="faq2" class="faq-answer" role="region" aria-labelledby="faq2button" hidden>
+                    <p>Purchased e-books are available for immediate download from your account dashboard and emailed to you.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq3" id="faq3button">
+                    Is my payment information secure?
+                </button>
+                <div id="faq3" class="faq-answer" role="region" aria-labelledby="faq3button" hidden>
+                    <p>Yes, we use Razorpay's secure payment gateway to ensure your transaction is safe.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h3>Kalpvruksh AI</h3>
+                <p>AI-powered tools for modern sales teams.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#">Templates</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Free Samples</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#">Twitter</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2025 Kalpvruksh AI. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Book Detail Modal -->
+    <div id="bookModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle" aria-modal="true" style="display:none;">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal" aria-label="Close modal">&times;</button>
+            <div class="modal-image-placeholder"></div>
+            <div>
+                <h2 id="modalTitle"></h2>
+                <p class="modal-author"></p>
+                <p class="modal-description"></p>
+                <div id="modalPdfDetails">
+                    <h4>PDF Details</h4>
+                    <ul>
+                        <li><strong>Pages:</strong> <span id="modalPdfPages"></span></li>
+                        <li><strong>File Size:</strong> <span id="modalPdfSize"></span></li>
+                        <li><strong>Format:</strong> PDF</li>
+                        <li><strong>Sample:</strong> <a href="#" id="modalPdfSampleLink" style="color:var(--primary-button-bg); text-decoration:underline;">View Sample Pages</a></li>
+                    </ul>
+                </div>
+                <button class="cta-button primary" id="modalBuyBtn">Buy Now</button>
+                <button class="cta-button secondary" id="modalAddToCartBtn" style="margin-left:8px;">Add to Cart</button>
+                <div class="review-section">
+                    <h4>Reviews</h4>
+                    <div class="reviews-list" id="modalReviewsList"></div>
+                    <form class="review-form" id="modalReviewForm">
+                        <input type="text" id="reviewerName" placeholder="Your name" required>
+                        <textarea id="reviewText" placeholder="Write a review..." required></textarea>
+                        <button type="submit" class="cta-button secondary" style="margin-top:8px;">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Preview Modal -->
+    <div id="pdf-preview-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:10000; align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:16px; max-width:900px; width:98%; margin:auto; padding:24px 24px 0 24px; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column;">
+            <button id="close-pdf-preview" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            <h3 style="margin-bottom:16px; color:var(--primary-color);">Sample Pages Preview</h3>
+            <iframe id="pdf-preview-frame" src="" style="width:100%; height:600px; border:none; border-radius:8px; background:#f7fcfd;"></iframe>
+        </div>
+    </div>
+
+    <script>
+    // --- Cart System ---
+    let cartCount = 0;
+    document.getElementById('cart-items').textContent = cartCount;
+
+    // --- Book Data ---
+    const books = [
+        {
+            id: 1,
+            title: "The Prompt Engineer's Handbook",
+            author: "Alex Chen",
+            price: "₹199",
+            desc: "A comprehensive guide to prompt engineering for AI.",
+            pages: "120",
+            size: "2.4 MB",
+            sample: "Kalpvruksh%20AI%20-%20Win%20with%20AI-Powered%20Email%20Prompts.pdf",
+            category: "prompt",
+            image: ""
+        },
+        {
+            id: 2,
+            title: "AI for Indian Businesses",
+            author: "Priya Sharma",
+            price: "₹299",
+            desc: "Strategies and case studies for AI adoption in Indian businesses.",
+            pages: "98",
+            size: "1.8 MB",
+            sample: "sample-ai-india.pdf",
+            category: "strategy",
+            image: ""
+        },
+        {
+            id: 3,
+            title: "Sales Automation Playbook",
+            author: "Rahul Singh",
+            price: "₹249",
+            desc: "Automate your sales process with proven AI strategies.",
+            pages: "110",
+            size: "2.1 MB",
+            sample: "#",
+            category: "sales",
+            image: ""
+        }
+    ];
+
+    // --- Reviews Storage (in-memory) ---
+    const reviews = {
+        1: [],
+        2: [],
+        3: []
+    };
+
+    // --- Modal Logic ---
+    function openBookModal(bookId) {
+        const book = books.find(b => b.id == bookId);
+        document.getElementById('modalTitle').textContent = book.title;
+        document.querySelector('.modal-author').textContent = "By " + book.author;
+        document.querySelector('.modal-image-placeholder').innerHTML = '<div class="book-image-placeholder"></div>';
+        document.querySelector('.modal-description').textContent = book.desc;
+        document.getElementById('modalPdfPages').textContent = book.pages;
+        document.getElementById('modalPdfSize').textContent = book.size;
+        document.getElementById('modalPdfSampleLink').href = book.sample;
+        document.getElementById('modalBuyBtn').onclick = function() {
+            alert("Proceeding to payment for " + book.title);
+        };
+        document.getElementById('modalAddToCartBtn').onclick = function() {
+            cartCount++;
+            document.getElementById('cart-items').textContent = cartCount;
+            this.textContent = "Added!";
+            setTimeout(() => { this.textContent = "Add to Cart"; }, 1200);
+        };
+        // Render reviews
+        const reviewsList = document.getElementById('modalReviewsList');
+        reviewsList.innerHTML = "";
+        reviews[book.id].forEach(r => {
+            const div = document.createElement('div');
+            div.style.margin = "8px 0";
+            div.innerHTML = `<strong>${r.name}:</strong> <span>${r.text}</span>`;
+            reviewsList.appendChild(div);
+        });
+        // Review form
+        document.getElementById('modalReviewForm').onsubmit = function(e) {
+            e.preventDefault();
+            const name = document.getElementById('reviewerName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+            if (name && text) {
+                reviews[book.id].push({ name, text });
+                openBookModal(book.id); // re-render reviews
+                this.reset();
+            }
+        };
+        // PDF sample preview
+        document.getElementById('modalPdfSampleLink').onclick = function(e) {
+            e.preventDefault();
+            document.getElementById('pdf-preview-frame').src = book.sample;
+            document.getElementById('pdf-preview-modal').style.display = 'flex';
+        };
+        document.getElementById('bookModal').style.display = 'block';
+        document.getElementById('bookModal').setAttribute('aria-hidden', 'false');
+    }
+
+    // --- Open Modal from Book Cards ---
+    function attachModalEvents() {
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+            btn.onclick = function(e) {
+                const card = btn.closest('.book-card');
+                openBookModal(card.getAttribute('data-id'));
+            };
+        });
+        document.querySelectorAll('.book-card').forEach(card => {
+            card.onkeydown = function(e) {
+                if (e.key === "Enter") openBookModal(card.getAttribute('data-id'));
+            };
+        });
+    }
+    attachModalEvents();
+    // Also re-attach after rendering books
+    const observer = new MutationObserver(attachModalEvents);
+    observer.observe(document.getElementById('allBooksGrid'), { childList: true });
+
+    // --- Close Modal ---
+    document.getElementById('closeModal').onclick = function() {
+        document.getElementById('bookModal').style.display = 'none';
+        document.getElementById('bookModal').setAttribute('aria-hidden', 'true');
+    };
+    document.getElementById('bookModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.style.display = 'none';
+            this.setAttribute('aria-hidden', 'true');
+        }
+    });
+
+    // --- PDF Preview Modal Logic ---
+    document.getElementById('close-pdf-preview').onclick = function() {
+        document.getElementById('pdf-preview-modal').style.display = 'none';
+        document.getElementById('pdf-preview-frame').src = "";
+    };
+    document.getElementById('pdf-preview-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.style.display = 'none';
+            document.getElementById('pdf-preview-frame').src = "";
+        }
+    });
+
+    // --- Referral System ---
+    document.getElementById('copy-referral-btn').onclick = function() {
+        const link = document.getElementById('referral-link');
+        link.select();
+        link.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        document.getElementById('referral-copied').style.display = 'inline';
+        setTimeout(() => {
+            document.getElementById('referral-copied').style.display = 'none';
+        }, 1500);
+    };
+
+    // --- Newsletter Signup ---
+    document.getElementById('newsletter-form').onsubmit = function(e) {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value.trim();
+        if (email) {
+            document.getElementById('newsletterMessage').textContent = "Thank you for subscribing!";
+            this.reset();
+        }
+    };
+
+    // --- FAQ Toggle ---
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.onclick = function() {
+            const answer = document.getElementById(btn.getAttribute('aria-controls'));
+            const expanded = btn.getAttribute('aria-expanded') === "true";
+            btn.setAttribute('aria-expanded', !expanded);
+            answer.hidden = expanded;
+        };
+    });
+    </script>
+</body>
+</html>
+    };
+    document.getElementById('pdf-preview-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.style.display = 'none';
+            document.getElementById('pdf-preview-frame').src = "";
+        }
+    });
+
+    // --- Referral System ---
+    document.getElementById('copy-referral-btn').onclick = function() {
+        const link = document.getElementById('referral-link');
+        link.select();
+        link.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        document.getElementById('referral-copied').style.display = 'inline';
+        setTimeout(() => {
+            document.getElementById('referral-copied').style.display = 'none';
+        }, 1500);
+    };
+
+    // --- Newsletter Signup ---
+    document.getElementById('newsletter-form').onsubmit = function(e) {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value.trim();
+        if (email) {
+            document.getElementById('newsletterMessage').textContent = "Thank you for subscribing!";
+            this.reset();
+        }
+    };
+
+    // --- FAQ Toggle ---
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.onclick = function() {
+            const answer = document.getElementById(btn.getAttribute('aria-controls'));
+            const expanded = btn.getAttribute('aria-expanded') === "true";
+            btn.setAttribute('aria-expanded', !expanded);
+            answer.hidden = expanded;
+        };
+    });
+    </script>
+</body>
+</html>
+
