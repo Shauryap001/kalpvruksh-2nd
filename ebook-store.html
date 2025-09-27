@@ -40,6 +40,11 @@
             <p>🔥 Special Offer: Buy 2 e-books, Get 1 FREE! Limited time only.</p>
         </section>
 
+            <!-- Search & Filters -->
+        <section class="container filters-section">
+            <input type="text" id="searchInput" placeholder="Search for books..." aria-label="Search books" />
+        </section>
+
         <!-- Referral System Section -->
 
         <!-- Hero Section -->
@@ -74,17 +79,6 @@
                     <button class="cta-button primary open-modal-btn">View Details</button>
                 </div>
             </div>
-        </section>
-
-        <!-- Search & Filters -->
-        <section class="container filters-section">
-            <input type="text" id="searchInput" placeholder="Search for books..." aria-label="Search books" />
-            <select id="categoryFilter" aria-label="Filter by category">
-                <option value="">All Categories</option>
-                <option value="prompt">Prompt Engineering</option>
-                <option value="strategy">AI Strategy</option>
-                <option value="sales">Sales Automation</option>
-            </select>
         </section>
 
         <!-- Customer Reviews -->
@@ -203,16 +197,10 @@
                         <li><strong>Sample:</strong> <a href="#" id="modalPdfSampleLink" style="color:var(--primary-button-bg); text-decoration:underline;">View Sample Pages</a></li>
                     </ul>
                 </div>
-                <button class="cta-button primary" id="modalBuyBtn">Buy Now</button>
-                <button class="cta-button secondary" id="modalAddToCartBtn" style="margin-left:8px;">Add to Cart</button>
-                <div class="review-section">
-                    <h4>Reviews</h4>
-                    <div class="reviews-list" id="modalReviewsList"></div>
-                    <form class="review-form" id="modalReviewForm">
-                        <input type="text" id="reviewerName" placeholder="Your name" required>
-                        <textarea id="reviewText" placeholder="Write a review..." required></textarea>
-                        <button type="submit" class="cta-button secondary" style="margin-top:8px;">Submit Review</button>
-                    </form>
+                <div class="modal-buttons" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px;">
+                    <button class="cta-button primary" id="modalBuyBtn">Buy Now</button>
+                    <button class="cta-button secondary" id="modalAddToCartBtn" style="margin-left:8px;">Add to Cart</button>
+                    <button class="cta-button secondary" id="modalDownloadBtn" style="margin-left:8px;">Download Free</button>
                 </div>
             </div>
         </div>
@@ -298,34 +286,50 @@
             this.textContent = "Added!";
             setTimeout(() => { this.textContent = "Add to Cart"; }, 1200);
         };
+        
+        // New Download Button functionality
+        document.getElementById('modalDownloadBtn').onclick = function() {
+            downloadPDF("navarati-Image-prompt book (1).pdf");
+            this.textContent = "Downloaded!";
+            setTimeout(() => { this.textContent = "Download Free"; }, 1500);
+        };
+        
         // Render reviews
         const reviewsList = document.getElementById('modalReviewsList');
-        reviewsList.innerHTML = "";
-        reviews[book.id].forEach(r => {
-            const div = document.createElement('div');
-            div.style.margin = "8px 0";
-            div.innerHTML = `<strong>${r.name}:</strong> <span>${r.text}</span>`;
-            reviewsList.appendChild(div);
-        });
-        // Review form
-        document.getElementById('modalReviewForm').onsubmit = function(e) {
-            e.preventDefault();
-            const name = document.getElementById('reviewerName').value.trim();
-            const text = document.getElementById('reviewText').value.trim();
-            if (name && text) {
-                reviews[book.id].push({ name, text });
-                openBookModal(book.id); // re-render reviews
-                this.reset();
-            }
-        };
+        if (reviewsList) {
+            reviewsList.innerHTML = "";
+            reviews[book.id].forEach(r => {
+                const div = document.createElement('div');
+                div.style.margin = "8px 0";
+                div.innerHTML = `<strong>${r.name}:</strong> <span>${r.text}</span>`;
+                reviewsList.appendChild(div);
+            });
+        }
+        
         // PDF sample preview
         document.getElementById('modalPdfSampleLink').onclick = function(e) {
             e.preventDefault();
             document.getElementById('pdf-preview-frame').src = book.sample;
             document.getElementById('pdf-preview-modal').style.display = 'flex';
         };
-        document.getElementById('bookModal').style.display = 'block';
+        
+        document.getElementById('bookModal').style.display = 'flex';
         document.getElementById('bookModal').setAttribute('aria-hidden', 'false');
+    }
+    
+    // Download PDF function
+    function downloadPDF(filename) {
+        // Create an anchor element
+        const link = document.createElement('a');
+        
+        // Set attributes for download
+        link.href = filename;
+        link.download = filename;
+        
+        // Append to document, trigger click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     // --- Open Modal from Book Cards ---
@@ -343,15 +347,21 @@
         });
     }
     attachModalEvents();
-    // Also re-attach after rendering books
-    const observer = new MutationObserver(attachModalEvents);
-    observer.observe(document.getElementById('allBooksGrid'), { childList: true });
 
-    // --- Close Modal ---
-    document.getElementById('closeModal').onclick = function() {
+    // Fix for allBooksGrid if it exists
+    const allBooksGrid = document.getElementById('allBooksGrid');
+    if (allBooksGrid) {
+        const observer = new MutationObserver(attachModalEvents);
+        observer.observe(allBooksGrid, { childList: true });
+    }
+
+    // --- Fix Close Modal Button ---
+    document.getElementById('closeModal').addEventListener('click', function() {
         document.getElementById('bookModal').style.display = 'none';
         document.getElementById('bookModal').setAttribute('aria-hidden', 'true');
-    };
+    });
+    
+    // --- Fix Close Modal on Outside Click ---
     document.getElementById('bookModal').addEventListener('click', function(e) {
         if (e.target === this) {
             this.style.display = 'none';
@@ -359,71 +369,19 @@
         }
     });
 
-    // --- PDF Preview Modal Logic ---
-    document.getElementById('close-pdf-preview').onclick = function() {
+    // --- Fix PDF Preview Close Button ---
+    document.getElementById('close-pdf-preview').addEventListener('click', function() {
         document.getElementById('pdf-preview-modal').style.display = 'none';
-        document.getElementById('pdf-preview-frame').src = "";
-    };
+        document.getElementById('pdf-preview-frame').src = '';
+    });
+    
+    // --- Fix PDF Preview Outside Click Close ---
     document.getElementById('pdf-preview-modal').addEventListener('click', function(e) {
         if (e.target === this) {
             this.style.display = 'none';
-            document.getElementById('pdf-preview-frame').src = "";
+            document.getElementById('pdf-preview-frame').src = '';
         }
     });
-
-    // --- Referral System ---
-    document.getElementById('copy-referral-btn').onclick = function() {
-        const link = document.getElementById('referral-link');
-        link.select();
-        link.setSelectionRange(0, 99999);
-        document.execCommand('copy');
-        document.getElementById('referral-copied').style.display = 'inline';
-        setTimeout(() => {
-            document.getElementById('referral-copied').style.display = 'none';
-        }, 1500);
-    };
-
-    // --- Newsletter Signup ---
-    document.getElementById('newsletter-form').onsubmit = function(e) {
-        e.preventDefault();
-        const email = document.getElementById('emailInput').value.trim();
-        if (email) {
-            document.getElementById('newsletterMessage').textContent = "Thank you for subscribing!";
-            this.reset();
-        }
-    };
-
-    // --- FAQ Toggle ---
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.onclick = function() {
-            const answer = document.getElementById(btn.getAttribute('aria-controls'));
-            const expanded = btn.getAttribute('aria-expanded') === "true";
-            btn.setAttribute('aria-expanded', !expanded);
-            answer.hidden = expanded;
-        };
-    });
-    </script>
-</body>
-</html>
-    };
-    document.getElementById('pdf-preview-modal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            this.style.display = 'none';
-            document.getElementById('pdf-preview-frame').src = "";
-        }
-    });
-
-    // --- Referral System ---
-    document.getElementById('copy-referral-btn').onclick = function() {
-        const link = document.getElementById('referral-link');
-        link.select();
-        link.setSelectionRange(0, 99999);
-        document.execCommand('copy');
-        document.getElementById('referral-copied').style.display = 'inline';
-        setTimeout(() => {
-            document.getElementById('referral-copied').style.display = 'none';
-        }, 1500);
-    };
 
     // --- Newsletter Signup ---
     document.getElementById('newsletter-form').onsubmit = function(e) {
