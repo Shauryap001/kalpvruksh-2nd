@@ -3,7 +3,7 @@
     --primary-color: #0A4F64; /* Deep Teal from logo trunk */
     --secondary-color: #5A7A85; /* Muted teal for subtitles */
     --background-color: #ffffff; /* Clean white background */
-    --primary-button-bg: #24AEC9; /* Vibrant Cyan from logo background */
+    --primary-button-bg: #2471c9; /* Vibrant Cyan from logo background */
     --primary-button-hover: #1E94AD; /* Darker cyan for hover */
     --secondary-button-bg: #E0F7FA; /* Light cyan for secondary buttons/backgrounds */
     --secondary-button-text: #1E94AD;
@@ -318,34 +318,6 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     font-family: var(--font-family);
 }
 
-/* Customer Reviews */
-#reviews {
-    padding-top: 30px;
-}
-
-.review-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    padding: 30px 0 70px;
-    text-align: left;
-}
-
-.review-card {
-    background-color: #f7fcfd;
-    padding: 30px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    font-style: italic;
-}
-
-.review-card strong {
-    display: block;
-    margin-top: 20px;
-    color: var(--primary-color);
-    font-weight: 700;
-}
-
 /* Newsletter Signup */
 .newsletter {
     background-color: #f7fcfd;
@@ -423,32 +395,33 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100vw; /* Changed to full viewport width */
+    height: 100vh; /* Changed to full viewport height */
     background: rgba(10, 79, 100, 0.8);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    padding: 0;
+    padding: 20px; /* Added padding around modal */
     overflow-y: auto;
 }
 
 .modal-content {
     background: white;
     border-radius: 16px;
-    width: 100vw;
-    max-width: 100vw;
-    min-height: 100vh;
-    margin: 0;
-    padding: 40px 0;
+    width: 100%;
+    max-width: 70vw; /* Maximum width constraint */
+    max-height: 85vh; /* Maximum height constraint */
+    margin: auto; /* Center in available space */
+    padding: 40px;
     position: relative;
     box-shadow: 0 12px 28px rgba(0,0,0,0.18);
     display: flex;
     flex-wrap: wrap;
     gap: 32px;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align items to top */
+    overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
 .modal-close {
@@ -470,13 +443,15 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     margin-bottom: 24px;
     border-radius: 12px;
     flex: 1 1 220px;
-    align-self: center;
+    align-self: flex-start; /* Align to top */
+    max-width: 220px; /* Limit maximum width */
 }
 
 .modal-content > div:not(.modal-image-placeholder) {
     flex: 2 1 280px;
     min-width: 280px;
-    align-self: center;
+    max-width: calc(100% - 260px); /* Leave space for image */
+    align-self: flex-start; /* Align to top */
 }
 
 .modal-description {
@@ -485,25 +460,11 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     font-size: 1.1rem;
 }
 
-@media (max-width: 900px) {
-    .modal-content {
-        flex-direction: column;
-        gap: 0;
-        padding: 24px 0;
-        max-width: 100vw;
-        min-height: 100vh;
-    }
-    .modal-image-placeholder {
-        width: 100%;
-        height: 180px;
-        margin-bottom: 18px;
-    }
-}
-
-@media (max-width: 600px) {
-    .modal-content {
-        padding: 0;
-    }
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 /* PDF Preview Modal */
@@ -524,9 +485,9 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
 #pdf-preview-modal > div {
     background: #fff;
     border-radius: 16px;
-    max-width: 100vw;
-    width: 100vw;
-    margin: 0;
+    max-width: 70vw; /* Changed from 80vw to 70vw */
+    width: 70vw;     /* Changed from 80vw to 70vw */
+    margin: auto;
     padding: 24px 0 0 0;
     position: relative;
     box-shadow: 0 8px 32px rgba(0,0,0,0.18);
@@ -605,17 +566,32 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
 @media (max-width: 900px) {
     .modal-content {
         flex-direction: column;
-        gap: 0;
-        padding: 24px 12px;
-        max-width: 98vw;
+        gap: 24px;
+        padding: 24px 20px;
+        max-width: 85vw;
+        overflow-y: auto;
     }
     .modal-image-placeholder {
-        width: 100%;
+        width: 180px;
         height: 180px;
-        margin-bottom: 18px;
+        margin: 0 auto 18px;
+        max-width: 100%;
     }
+    .modal-content > div:not(.modal-image-placeholder) {
+        max-width: 100%;
+    }
+    /* Fix review section width */
 }
 
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 16px 12px;
+        max-width: 95vw;
+    }
+    #pdf-preview-frame {
+        height: 320px;
+    }
+}
 @media (max-width: 600px) {
     .modal-content {
         padding: 12px 4px;
