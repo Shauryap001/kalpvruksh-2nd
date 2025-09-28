@@ -14,12 +14,110 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    console.log("Kalpvruksh AI Website Initialized. Inspired by Tidio's high-converting design.");
+    console.log("Kalpvruksh AI Website Initialized");
 
-    // Placeholder for future mobile menu logic or chatbot initialization
-
-    document.addEventListener('DOMContentLoaded', () => {
-    // Smooth scrolling for anchor links if needed - reuse from main site script
+    // Login form handling - Enhanced debugging
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        console.log("Login form found, attaching handlers");
+        
+        // Clear previous messages when focusing inputs
+        document.getElementById('email').addEventListener('focus', clearLoginMessages);
+        document.getElementById('password').addEventListener('focus', clearLoginMessages);
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginMessage = document.getElementById('login-message');
+            
+            console.log("Login attempt with:", email);
+            
+            // Enhanced validation
+            if (!email) {
+                showLoginError("Please enter your email address");
+                return;
+            }
+            if (!password) {
+                showLoginError("Please enter your password");
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showLoginError("Please enter a valid email address");
+                return;
+            }
+            
+            // This is where you would normally make an API call to authenticate
+            // For demo purposes, we'll simulate a successful login
+            loginMessage.textContent = "Login successful! Redirecting...";
+            loginMessage.className = "login-message success";
+            loginMessage.style.display = 'block';
+            
+            // Store login state in localStorage
+            localStorage.setItem('kalpvrukshLoggedIn', 'true');
+            localStorage.setItem('kalpvrukshUserEmail', email);
+            
+            // Redirect after a brief delay
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1500);
+        });
+    }
+    
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    
+    function showLoginError(message) {
+        const loginMessage = document.getElementById('login-message');
+        loginMessage.textContent = message;
+        loginMessage.className = "login-message error";
+        loginMessage.style.display = 'block';
+    }
+    
+    function clearLoginMessages() {
+        const loginMessage = document.getElementById('login-message');
+        if (loginMessage) {
+            loginMessage.style.display = 'none';
+        }
+    }
+    
+    // Check login status on page load
+    function checkLoginStatus() {
+        const isLoggedIn = localStorage.getItem('kalpvrukshLoggedIn') === 'true';
+        const userEmail = localStorage.getItem('kalpvrukshUserEmail');
+        
+        // Update all login buttons across the site
+        document.querySelectorAll('.login-btn').forEach(btn => {
+            if (isLoggedIn && userEmail) {
+                // Change login button to show user is logged in
+                btn.textContent = userEmail.split('@')[0]; // Show username
+                btn.href = "#"; // Could point to a user profile page
+                btn.classList.add('logged-in');
+                
+                // Add logout option
+                btn.addEventListener('click', function(e) {
+                    if (isLoggedIn) {
+                        e.preventDefault();
+                        if (confirm("Do you want to log out?")) {
+                            localStorage.removeItem('kalpvrukshLoggedIn');
+                            localStorage.removeItem('kalpvrukshUserEmail');
+                            location.reload();
+                        }
+                    }
+                });
+            } else {
+                // Ensure login button points to login page
+                btn.href = "login.html";
+                btn.classList.remove('logged-in');
+            }
+        });
+    }
+    
+    // Run login check
+    checkLoginStatus();
 
     // Sample book data for "All Books" section
     const books = [
@@ -67,8 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render all books in the All Books grid
     const allBooksGrid = document.getElementById('allBooksGrid');
+    if (allBooksGrid) {
+        renderBooks(books);
+    }
 
     function renderBooks(displayBooks) {
+        if (!allBooksGrid) return;
+        
         allBooksGrid.innerHTML = '';
 
         if(displayBooks.length === 0) {
@@ -95,14 +198,21 @@ document.addEventListener('DOMContentLoaded', () => {
         bindModalOpen();
     }
 
-    // Initial render
-    renderBooks(books);
-
     // Search and filter functionality
     const searchInput = document.getElementById('searchInput');
     const categoryFilter = document.getElementById('categoryFilter');
 
+    if (searchInput) {
+        searchInput.addEventListener('input', filterBooks);
+    }
+    
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', filterBooks);
+    }
+    
     function filterBooks() {
+        if (!searchInput || !categoryFilter) return;
+        
         const searchValue = searchInput.value.toLowerCase();
         const categoryValue = categoryFilter.value;
 
@@ -115,55 +225,59 @@ document.addEventListener('DOMContentLoaded', () => {
         renderBooks(filtered);
     }
 
-    searchInput.addEventListener('input', filterBooks);
-    categoryFilter.addEventListener('change', filterBooks);
-
     // Modal functionality
     const bookModal = document.getElementById('bookModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalAuthor = bookModal.querySelector('.modal-author');
-    const modalDescription = bookModal.querySelector('.modal-description');
-    const modalBuyBtn = document.getElementById('modalBuyBtn');
-    const closeModalBtn = document.getElementById('closeModal');
+    if (bookModal) {
+        const modalTitle = document.getElementById('modalTitle');
+        const modalAuthor = bookModal.querySelector('.modal-author');
+        const modalDescription = bookModal.querySelector('.modal-description');
+        const modalBuyBtn = document.getElementById('modalBuyBtn');
+        const closeModalBtn = document.getElementById('closeModal');
 
-    function openModal(bookId) {
-        const book = books.find(b => b.id == bookId);
-        if (!book) return;
+        function openModal(bookId) {
+            const book = books.find(b => b.id == bookId);
+            if (!book) return;
 
-        modalTitle.textContent = book.title;
-        modalAuthor.textContent = `By ${book.author}`;
-        modalDescription.textContent = book.description;
+            modalTitle.textContent = book.title;
+            modalAuthor.textContent = `By ${book.author}`;
+            modalDescription.textContent = book.description;
 
-        bookModal.style.display = 'flex';
-        bookModal.setAttribute('aria-hidden', 'false');
+            bookModal.style.display = 'flex';
+            bookModal.setAttribute('aria-hidden', 'false');
 
-        modalBuyBtn.onclick = () => {
-            alert(`Initiate purchase flow for "${book.title}" (₹${book.price})`);
-        };
-    }
-
-    function closeModal() {
-        bookModal.style.display = 'none';
-        bookModal.setAttribute('aria-hidden', 'true');
-    }
-
-    function bindModalOpen() {
-        document.querySelectorAll('.open-modal-btn').forEach(button => {
-            button.onclick = (e) => {
-                const bookCard = e.target.closest('.book-card');
-                if (!bookCard) return;
-                openModal(bookCard.getAttribute('data-id'));
+            modalBuyBtn.onclick = () => {
+                alert(`Initiate purchase flow for "${book.title}" (₹${book.price})`);
             };
-        });
-    }
-
-    closeModalBtn.addEventListener('click', closeModal);
-
-    window.addEventListener('click', (event) => {
-        if (event.target === bookModal) {
-            closeModal();
         }
-    });
+
+        function closeModal() {
+            bookModal.style.display = 'none';
+            bookModal.setAttribute('aria-hidden', 'true');
+        }
+
+        function bindModalOpen() {
+            document.querySelectorAll('.open-modal-btn').forEach(button => {
+                button.onclick = (e) => {
+                    const bookCard = e.target.closest('.book-card');
+                    if (!bookCard) return;
+                    openModal(bookCard.getAttribute('data-id'));
+                };
+            });
+        }
+
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target === bookModal) {
+                closeModal();
+            }
+        });
+        
+        // Initially bind modal open on featured books too
+        bindModalOpen();
+    }
 
     // FAQ accordion toggle
     document.querySelectorAll('.faq-question').forEach(q => {
@@ -179,21 +293,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const newsletterForm = document.getElementById('newsletter-form');
     const newsletterMessage = document.getElementById('newsletterMessage');
 
-    newsletterForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const emailInput = document.getElementById('emailInput');
-        // Basic email validation
-        if(emailInput.value && emailInput.value.includes('@')){
-            newsletterMessage.textContent = "Thank you for subscribing!";
-            newsletterForm.reset();
-        } else {
-            newsletterMessage.textContent = "Please enter a valid email address.";
-        }
-    });
-
-    // Initially bind modal open on featured books too
-    bindModalOpen();
-
-});
-
+    if (newsletterForm && newsletterMessage) {
+        newsletterForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const emailInput = document.getElementById('emailInput');
+            // Basic email validation
+            if(emailInput.value && emailInput.value.includes('@')){
+                newsletterMessage.textContent = "Thank you for subscribing!";
+                newsletterForm.reset();
+            } else {
+                newsletterMessage.textContent = "Please enter a valid email address.";
+            }
+        });
+    }
 });
