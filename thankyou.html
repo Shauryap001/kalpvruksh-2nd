@@ -214,7 +214,7 @@
                         </div>
                     </div>
                     <div class="download-buttons">
-                        <button class="cta-button primary" onclick="downloadExistingPDF('Navaratri-Limited-Edition-prompt-book.pdf')">Download Book</button>
+                        <button class="cta-button primary" onclick="downloadExistingPDF('Navaratri-Limited-Edition-prompt-book_compressed.pdf')">Download Book</button>
                         <button class="cta-button secondary" onclick="generateReceiptPDF()">Download Receipt</button>
                     </div>
                 </div>
@@ -336,7 +336,7 @@
             doc.line(20, 92, 190, 92);
             
             // Add item
-            doc.text("Navaratri-Limited-Edition-prompt-book.pdf", 20, 100);
+            doc.text("Navaratri-Limited-Edition-prompt-book_compressed.pdf", 20, 100);
             doc.text("₹100", 150, 100);
             
             // Add discount
@@ -356,7 +356,7 @@
             doc.setFontSize(14);
             doc.text("Thank you for your purchase!", 105, 150, { align: "center" });
             doc.setFontSize(12);
-            doc.text("If you have any questions, please contact support@kalpvruksh.ai", 105, 160, { align: "center" });
+            doc.text("If you have any questions, please kalpvruksh.email.ai@gmail.com", 105, 160, { align: "center" });
             
             // Save and trigger download
             doc.save("kalpvruksh_receipt.pdf");
