@@ -170,7 +170,7 @@
             
             <div class="order-details">
                 <h3>Order Details</h3>
-                <p><strong>Order Number:</strong> <span id="order-number">KAI-25789</span></p>
+                <p><strong>Order Number:</strong> <span id="order-number">kalp-0838</span></p>
                 <p><strong>Date:</strong> <span id="order-date"></span></p>
                 
                 <table class="order-table">
@@ -182,14 +182,18 @@
                     </thead>
                     <tbody id="order-items">
                         <tr>
-                            <td>The Prompt Engineer's Handbook</td>
-                            <td>₹199</td>
+                            <td>Kalpvruksh-Navaratri-Edition-Prompt-Book("Limited Edition")</td>
+                            <td>₹100</td>
+                        </tr>
+                        <tr>
+                            <td> Navaratri Discount (80%)</td>
+                            <td>-₹80</td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td><strong>Total</strong></td>
-                            <td><strong>₹199</strong></td>
+                            <td><strong>₹20</strong></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -205,12 +209,12 @@
                     <div class="download-info">
                         <div class="download-icon">PDF</div>
                         <div>
-                            <h3>The Prompt Engineer's Handbook</h3>
+                            <h3>Kalpvruksh-Navaratri-Edition-Prompt-Book</h3>
                             <p>PDF format, 2.4 MB</p>
                         </div>
                     </div>
                     <div class="download-buttons">
-                        <button class="cta-button primary" onclick="downloadExistingPDF('navarati-Image- prompt book (1).pdf')">Download Book</button>
+                        <button class="cta-button primary" onclick="downloadExistingPDF('Navaratri-Limited-Edition-prompt-book.pdf')">Download Book</button>
                         <button class="cta-button secondary" onclick="generateReceiptPDF()">Download Receipt</button>
                     </div>
                 </div>
@@ -320,7 +324,7 @@
             doc.text("Order Details", 20, 50);
             
             doc.setFontSize(12);
-            doc.text(`Order Number: ${document.getElementById('order-number').textContent}`, 20, 60);
+            doc.text(`Order Number: 838`, 20, 60);
             doc.text(`Date: ${document.getElementById('order-date').textContent}`, 20, 70);
             
             // Item details
@@ -332,23 +336,27 @@
             doc.line(20, 92, 190, 92);
             
             // Add item
-            doc.text("The Prompt Engineer's Handbook", 20, 100);
-            doc.text("₹199", 150, 100);
+            doc.text("Navaratri-Limited-Edition-prompt-book.pdf", 20, 100);
+            doc.text("₹100", 150, 100);
+            
+            // Add discount
+            doc.text("Discount (80%)", 20, 110);
+            doc.text("-₹80", 150, 110);
             
             // Draw another line
-            doc.line(20, 110, 190, 110);
+            doc.line(20, 120, 190, 120);
             
             // Total
             doc.setFont(undefined, 'bold');
-            doc.text("Total", 20, 120);
-            doc.text("₹199", 150, 120);
+            doc.text("Total", 20, 130);
+            doc.text("₹20", 150, 130);
             doc.setFont(undefined, 'normal');
             
             // Thank you message
             doc.setFontSize(14);
-            doc.text("Thank you for your purchase!", 105, 140, { align: "center" });
+            doc.text("Thank you for your purchase!", 105, 150, { align: "center" });
             doc.setFontSize(12);
-            doc.text("If you have any questions, please contact support@kalpvruksh.ai", 105, 150, { align: "center" });
+            doc.text("If you have any questions, please contact support@kalpvruksh.ai", 105, 160, { align: "center" });
             
             // Save and trigger download
             doc.save("kalpvruksh_receipt.pdf");
