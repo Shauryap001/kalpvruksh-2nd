@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Add Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
 
@@ -62,21 +64,30 @@
                     <h3>The Prompt Engineer's Handbook</h3>
                     <p class="book-author">By Alex Chen</p>
                     <p class="book-price">₹199</p>
-                    <button class="cta-button primary open-modal-btn">View Details</button>
+                    <div class="book-buttons">
+                        <button class="cta-button primary buy-now-btn" onclick="initiatePayment(1)">Buy Now</button>
+                        <button class="cta-button secondary open-modal-btn">View Details</button>
+                    </div>
                 </div>
                 <div class="book-card" data-id="2" data-title="AI for Indian Businesses" data-author="Priya Sharma" data-price="₹299" data-desc="Strategies and case studies for AI adoption in Indian businesses." data-pages="98" data-size="1.8 MB" data-sample="sample-ai-india.pdf" data-category="strategy" tabindex="0">
                     <div class="book-image-placeholder"></div>
                     <h3>AI for Indian Businesses</h3>
                     <p class="book-author">By Priya Sharma</p>
                     <p class="book-price">₹299</p>
-                    <button class="cta-button primary open-modal-btn">View Details</button>
+                    <div class="book-buttons">
+                        <button class="cta-button primary buy-now-btn" onclick="initiatePayment(2)">Buy Now</button>
+                        <button class="cta-button secondary open-modal-btn">View Details</button>
+                    </div>
                 </div>
                 <div class="book-card" data-id="3" data-title="Sales Automation Playbook" data-author="Rahul Singh" data-price="₹249" data-desc="Automate your sales process with proven AI strategies." data-pages="110" data-size="2.1 MB" data-sample="#" data-category="sales" tabindex="0">
                     <div class="book-image-placeholder"></div>
                     <h3>Sales Automation Playbook</h3>
                     <p class="book-author">By Rahul Singh</p>
                     <p class="book-price">₹249</p>
-                    <button class="cta-button primary open-modal-btn">View Details</button>
+                    <div class="book-buttons">
+                        <button class="cta-button primary buy-now-btn" onclick="initiatePayment(3)">Buy Now</button>
+                        <button class="cta-button secondary open-modal-btn">View Details</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -197,7 +208,7 @@
                         <li><strong>Sample:</strong> <a href="#" id="modalPdfSampleLink" style="color:var(--primary-button-bg); text-decoration:underline;">View Sample Pages</a></li>
                     </ul>
                 </div>
-                <div class="modal-buttons" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px;">
+                <div class="modal-buttons">
                     <button class="cta-button primary" id="modalBuyBtn">Buy Now</button>
                     <button class="cta-button secondary" id="modalAddToCartBtn" style="margin-left:8px;">Add to Cart</button>
                     <button class="cta-button secondary" id="modalDownloadBtn" style="margin-left:8px;">Download Free</button>
@@ -227,6 +238,7 @@
             title: "The Prompt Engineer's Handbook",
             author: "Alex Chen",
             price: "₹199",
+            priceAmount: 199,
             desc: "A comprehensive guide to prompt engineering for AI.",
             pages: "120",
             size: "2.4 MB",
@@ -239,6 +251,7 @@
             title: "AI for Indian Businesses",
             author: "Priya Sharma",
             price: "₹299",
+            priceAmount: 299,
             desc: "Strategies and case studies for AI adoption in Indian businesses.",
             pages: "98",
             size: "1.8 MB",
@@ -251,6 +264,7 @@
             title: "Sales Automation Playbook",
             author: "Rahul Singh",
             price: "₹249",
+            priceAmount: 249,
             desc: "Automate your sales process with proven AI strategies.",
             pages: "110",
             size: "2.1 MB",
@@ -278,7 +292,7 @@
         document.getElementById('modalPdfSize').textContent = book.size;
         document.getElementById('modalPdfSampleLink').href = book.sample;
         document.getElementById('modalBuyBtn').onclick = function() {
-            alert("Proceeding to payment for " + book.title);
+            initiatePayment(book.id);
         };
         document.getElementById('modalAddToCartBtn').onclick = function() {
             cartCount++;
@@ -401,6 +415,93 @@
             btn.setAttribute('aria-expanded', !expanded);
             answer.hidden = expanded;
         };
+    });
+
+    // Razorpay Payment Integration
+    function initiatePayment(bookId) {
+        try {
+            console.log("Initiating payment for book ID:", bookId);
+            const book = books.find(b => b.id == bookId);
+            if (!book) {
+                console.error("Book not found with ID:", bookId);
+                return;
+            }
+            
+            // Convert price string to number and ensure it's a valid amount
+            let priceAmount = book.priceAmount || 199; // Default to 199 if not set
+            
+            const options = {
+                key: 'rzp_live_RMvL1ArRi2m0Z9',
+                amount: priceAmount * 100, // Amount in smallest currency unit (paise for INR)
+                currency: 'INR',
+                name: 'Kalpvruksh AI',
+                description: `Purchase: ${book.title}`,
+                image: 'WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg',
+                handler: function (response) {
+                    console.log("Payment successful:", response);
+                    alert("Payment successful! Redirecting to thank you page...");
+                    window.location.href = `thankyou.html?order_id=${response.razorpay_payment_id}&book_id=${bookId}`;
+                },
+                prefill: {
+                    name: '',
+                    email: '',
+                    contact: ''
+                },
+                notes: {
+                    address: 'Kalpvruksh AI Office',
+                    book_id: bookId
+                },
+                theme: {
+                    color: '#2471c9'
+                },
+                modal: {
+                    ondismiss: function() {
+                        console.log("Payment modal dismissed");
+                    }
+                }
+            };
+            
+            console.log("Razorpay options:", options);
+            
+            // Create a new instance for each payment attempt
+            const rzp = new window.Razorpay(options);
+            
+            // Add event listeners for payment issues
+            rzp.on('payment.failed', function (response){
+                console.error("Payment failed:", response.error);
+                alert(`Payment failed: ${response.error.description}`);
+            });
+            
+            // Open the payment dialog
+            rzp.open();
+        } catch (error) {
+            console.error("Error initiating payment:", error);
+            alert("Could not initialize payment. Please try again later.");
+        }
+    }
+
+    // Make sure the Razorpay object is loaded before trying to use it
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if Razorpay is loaded
+        if (typeof Razorpay === 'undefined') {
+            console.error("Razorpay SDK not loaded!");
+            // Add fallback for payment buttons
+            document.querySelectorAll('.buy-now-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert("Payment gateway is currently unavailable. Please try again later.");
+                });
+            });
+        } else {
+            console.log("Razorpay SDK loaded successfully");
+            
+            // Add direct event listeners to buttons for better reliability
+            document.querySelectorAll('.buy-now-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const bookId = this.closest('.book-card').getAttribute('data-id');
+                    initiatePayment(bookId);
+                });
+            });
+        }
     });
     </script>
 </body>
