@@ -1,0 +1,499 @@
+/*
+ * Kalpvruksh AI - Comprehensive Responsive Styles
+ * This file contains responsive styles for all screen sizes
+ */
+
+/* Base Responsive Settings */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Responsive Images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mobile Navigation Enhancement */
+.mobile-nav-toggle {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 8px;
+    display: none;
+    color: var(--primary-color);
+    z-index: 1010;
+    transition: all 0.3s ease;
+}
+
+/* General Responsive Grid */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Improved Container Responsiveness */
+.container {
+    width: 100%;
+    padding-left: max(20px, 5vw);
+    padding-right: max(20px, 5vw);
+}
+
+/* Touch-friendly Button Sizes */
+button, .cta-button, .nav-links a, input[type="submit"] {
+    min-height: 44px; /* Minimum touch target size */
+}
+
+/* Large Desktop (1440px and up) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1340px;
+        margin: 0 auto;
+    }
+    
+    /* Larger typography for bigger screens */
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+    h2 {
+        font-size: 2.8rem;
+    }
+}
+
+/* Desktop (1200px to 1439px) */
+@media (max-width: 1439px) and (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+}
+
+/* Small Desktop & Tablet Landscape (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .container {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+    
+    /* Adjust hero section */
+    #hero h1 {
+        font-size: 3.25rem;
+    }
+    
+    /* Slightly reduce element spacing */
+    .book-grid {
+        gap: 20px;
+    }
+    
+    /* PDF preview adjustments */
+    #pdf-preview-frame {
+        height: 65vh;
+    }
+}
+
+/* Tablet (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+    .container {
+        max-width: 720px;
+        margin: 0 auto;
+    }
+    
+    /* Adjust hero section */
+    #hero {
+        padding: 60px 0;
+    }
+    
+    #hero h1 {
+        font-size: 2.75rem;
+    }
+    
+    /* Change grid layouts */
+    #features, .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+    
+    /* Book detail layout */
+    .book-detail-container {
+        gap: 30px;
+    }
+}
+
+/* Mobile Landscape & Small Tablet (576px to 767px) */
+@media (max-width: 767px) {
+    /* Enable mobile navigation */
+    .mobile-nav-toggle {
+        display: block;
+    }
+    
+    nav.container {
+        position: relative;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 72px);
+        background: white;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: none;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .nav-links.active {
+        transform: translateX(0);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        display: flex;
+    }
+    
+    .nav-links a {
+        width: 100%;
+        padding: 16px;
+        text-align: center;
+        font-size: 1.1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+    
+    /* Hero section adjustments */
+    #hero {
+        padding: 50px 0;
+        text-align: center;
+    }
+    
+    #hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    #hero .subtitle {
+        font-size: 1.1rem;
+        margin: 16px auto 24px;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .hero-actions .cta-button {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    /* Section layouts */
+    #features, .steps-grid, .review-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .feature-card, .step, .review-card {
+        padding: 20px;
+    }
+    
+    /* Footer adjustments */
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+    
+    /* Book grid adjustments */
+    .book-grid {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 16px;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        padding: 24px;
+        max-width: 95%;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .modal-image-placeholder {
+        width: 180px;
+        height: 180px;
+        margin: 0 0 20px;
+    }
+    
+    .modal-content > div:not(.modal-image-placeholder) {
+        max-width: 100%;
+        text-align: center;
+    }
+    
+    .modal-buttons {
+        justify-content: center;
+    }
+    
+    /* PDF preview adjustments */
+    #pdf-preview-modal > div {
+        width: 95%;
+        padding: 20px 16px;
+    }
+    
+    #pdf-preview-frame {
+        height: 60vh;
+    }
+    
+    /* Book detail page */
+    .book-image-slideshow {
+        width: 240px;
+        height: 320px;
+    }
+}
+
+/* Mobile Portrait (575px and below) */
+@media (max-width: 575px) {
+    /* Header & branding */
+    .logo-text {
+        font-size: 1.1rem;
+    }
+    
+    .logo-img-wrapper {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .logo-img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .nav-actions {
+        gap: 5px;
+    }
+    
+    .login-btn, 
+    .cta-button.primary {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+    
+    /* Content spacing */
+    section {
+        padding: 40px 0;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    
+    /* Hero section */
+    #hero {
+        padding: 40px 0;
+    }
+    
+    #hero h1 {
+        font-size: 2rem;
+    }
+    
+    #hero .subtitle {
+        font-size: 1rem;
+        margin: 14px auto 20px;
+    }
+    
+    /* Forms and inputs */
+    .filters-section {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .filters-section input,
+    .filters-section select {
+        width: 100%;
+    }
+    
+    .newsletter form {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .newsletter input[type="email"] {
+        width: 100%;
+    }
+    
+    .newsletter button {
+        width: 100%;
+    }
+    
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+    
+    /* Book detail page */
+    .book-detail-section {
+        padding: 30px 0;
+    }
+    
+    .book-image-slideshow {
+        width: 200px;
+        height: 260px;
+    }
+    
+    .book-detail-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    /* PDF viewer */
+    #pdf-preview-frame {
+        height: 50vh;
+    }
+    
+    .dots-container {
+        gap: 6px;
+    }
+    
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+    
+    /* Product details sections */
+    .product-section h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Extra Small Devices (400px and below) */
+@media (max-width: 400px) {
+    /* Header elements */
+    .logo-text {
+        font-size: 1rem;
+    }
+    
+    .logo-img-wrapper {
+        width: 32px;
+        height: 32px;
+    }
+    
+    /* Button and spacing adjustments */
+    .cta-button, .book-buttons .cta-button {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    /* Book cards */
+    .book-card {
+        padding: 12px;
+    }
+    
+    .book-image-placeholder {
+        height: 150px;
+        width: 115px;
+    }
+    
+    /* Book detail page */
+    .book-image-slideshow {
+        width: 180px;
+        height: 240px;
+    }
+    
+    .prev, .next {
+        padding: 8px;
+        font-size: 1rem;
+    }
+    
+    /* Form elements */
+    .form-group input {
+        padding: 12px;
+    }
+    
+    /* PDF viewer */
+    #pdf-preview-frame {
+        height: 40vh;
+    }
+}
+
+/* Print Media Query */
+@media print {
+    nav, footer, .cta-button, .mobile-nav-toggle, #pdf-preview-modal {
+        display: none !important;
+    }
+    
+    body, html {
+        background-color: white;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+/* Landscape Orientation Adjustments for Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    #hero {
+        padding: 30px 0;
+    }
+    
+    #hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .nav-links.active {
+        height: auto;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .book-image-slideshow {
+        width: 160px;
+        height: 200px;
+    }
+}
+
+/* Dark Mode Support (If System Preference) */
+@media (prefers-color-scheme: dark) {
+    .pdf-preview-modal {
+        background: rgba(0,0,0,0.9);
+    }
+}
+
+/* Focus Visible for Accessibility */
+:focus-visible {
+    outline: 3px solid var(--primary-button-bg);
+    outline-offset: 2px;
+}
+
+/* CSS Variables for Theme Switching */
+:root {
+    --header-height: 72px;
+    --footer-padding: 80px;
+}
