@@ -306,4 +306,53 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
+    // Mobile Navigation Toggle - Added for better responsiveness
+    const setupMobileNavigation = () => {
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileNavToggle && navLinks) {
+            // Toggle navigation when menu button is clicked
+            mobileNavToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent document click from immediately closing it
+                navLinks.classList.toggle('active');
+                
+                // Add aria attributes for accessibility
+                const expanded = navLinks.classList.contains('active');
+                mobileNavToggle.setAttribute('aria-expanded', expanded);
+                
+                // Change hamburger icon to X when open (optional)
+                mobileNavToggle.textContent = expanded ? '✕' : '☰';
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navLinks.classList.contains('active') && 
+                    !navLinks.contains(e.target) && 
+                    e.target !== mobileNavToggle) {
+                    navLinks.classList.remove('active');
+                    mobileNavToggle.textContent = '☰';
+                    mobileNavToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Close menu when pressing Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileNavToggle.textContent = '☰';
+                    mobileNavToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Set initial ARIA state
+            mobileNavToggle.setAttribute('aria-expanded', 'false');
+            mobileNavToggle.setAttribute('aria-controls', 'nav-links');
+            navLinks.id = 'nav-links';
+        }
+    };
+    
+    // Initialize mobile navigation
+    setupMobileNavigation();
 });
