@@ -435,6 +435,116 @@ button, .cta-button, .nav-links a, input[type="submit"] {
     }
 }
 
+/* Improved Mobile Spacing and Typography */
+@media (max-width: 767px) {
+    /* Improve container padding for breathing room */
+    .container {
+        padding-left: max(24px, 6vw);
+        padding-right: max(24px, 6vw);
+    }
+    
+    /* Better text sizing and spacing for readability */
+    p, li, td, .book-description {
+        font-size: 1rem;
+        line-height: 1.6;
+        letter-spacing: 0.01em;
+    }
+    
+    /* Add more spacing between sections */
+    section {
+        padding: 40px 0;
+        margin-bottom: 15px;
+    }
+    
+    /* More breathing room around content blocks */
+    .book-card, .review-card, .feature-card, .step, .faq-item {
+        margin-bottom: 24px;
+    }
+    
+    /* Better content spacing */
+    h1, h2, h3 {
+        margin-bottom: 16px;
+    }
+}
+
+/* Enhanced Mobile Portrait Spacing (575px and below) */
+@media (max-width: 575px) {
+    /* Increase padding for more breathing room */
+    .container {
+        padding-left: max(20px, 7vw);
+        padding-right: max(20px, 7vw);
+    }
+    
+    /* Better card spacing and padding */
+    .book-card, .review-card, .feature-card {
+        padding: 20px;
+    }
+    
+    /* Add more whitespace between elements */
+    p {
+        margin-bottom: 16px;
+    }
+    
+    /* Optimize typography for small screens */
+    body {
+        line-height: 1.65;
+    }
+    
+    /* Better vertical spacing between elements */
+    .book-grid {
+        gap: 24px;
+    }
+    
+    /* Reduce header sizes for better fit */
+    .book-card h3 {
+        font-size: 1.15rem;
+    }
+    
+    /* More space around buttons */
+    .cta-button {
+        margin: 8px 0;
+    }
+    
+    /* Product detail page improvements */
+    .book-detail-content {
+        padding: 10px 5px;
+    }
+    
+    .product-section {
+        margin-bottom: 30px;
+    }
+    
+    /* PDF modal more breathing room */
+    #pdf-preview-modal > div {
+        padding: 24px 20px;
+    }
+}
+
+/* Small Phone Improvements (400px and below) */
+@media (max-width: 400px) {
+    /* Further increase side padding for tiny screens */
+    .container {
+        padding-left: max(16px, 8vw);
+        padding-right: max(16px, 8vw);
+    }
+    
+    /* Optimize typography further */
+    body {
+        font-size: 15px;
+    }
+    
+    /* Improve spacing and readability */
+    p, li {
+        margin-bottom: 14px;
+        line-height: 1.7;
+    }
+    
+    /* Adjust card sizes */
+    .book-card {
+        padding: 16px 14px;
+    }
+}
+
 /* Print Media Query */
 @media print {
     nav, footer, .cta-button, .mobile-nav-toggle, #pdf-preview-modal {
