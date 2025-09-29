@@ -301,6 +301,22 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     font-weight: 600;
 }
 
+.book-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.book-buttons .cta-button {
+    margin: 0;
+}
+
+.book-buttons .cta-button.secondary {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+}
+
 /* Filters Section */
 .filters-section {
     display: flex;
@@ -497,8 +513,9 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
 }
 
 #pdf-preview-frame {
-    width: 90vw;
-    height: 80vh;
+    width: 100%;
+    height: 70vh;
+    min-height: 300px;
     border: none;
     border-radius: 8px;
     background: #f7fcfd;
@@ -518,86 +535,477 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     z-index: 2;
 }
 
-/* Responsive Design */
+/* Login Page Styles - Improved spacing */
+.login-section {
+    padding: 80px 0;
+    min-height: calc(100vh - 72px - 300px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.login-container h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.login-subtitle {
+    text-align: center;
+    color: var(--secondary-color);
+    margin-bottom: 36px;
+    font-size: 1.05rem;
+}
+
+.form-group {
+    margin-bottom: 28px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-button-bg);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(36, 113, 201, 0.2);
+}
+
+.password-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    font-size: 0.95rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: var(--primary-button-bg);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+    color: var(--primary-button-hover);
+}
+
+.login-button {
+    width: 100%;
+    margin: 8px 0 28px;
+    font-weight: 600;
+    padding: 14px;
+    font-size: 1.05rem;
+}
+
+.login-divider {
+    position: relative;
+    text-align: center;
+    margin: 24px 0;
+}
+
+.login-divider::before, .login-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    height: 1px;
+    width: calc(50% - 24px);
+    background-color: var(--border-color);
+}
+
+.login-divider::before {
+    left: 0;
+}
+
+.login-divider::after {
+    right: 0;
+}
+
+.login-divider span {
+    display: inline-block;
+    padding: 0 12px;
+    background-color: #fff;
+    position: relative;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+}
+
+.social-login-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.social-login-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.social-login-button:hover {
+    background-color: #f7f9fc;
+    border-color: #c4c4c4;
+}
+
+.signup-prompt {
+    text-align: center;
+    margin-top: 28px;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+}
+
+.signup-link {
+    color: var(--primary-button-bg);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+    color: var(--primary-button-hover);
+}
+
+.login-message {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    display: none;
+    font-size: 0.95rem;
+}
+
+.login-message.success {
+    display: block;
+    background-color: #e6f7e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.login-message.error {
+    display: block;
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+.login-btn.active, .nav-links a.active {
+    color: var(--primary-button-bg);
+    font-weight: 700;
+}
+
+.login-btn.logged-in {
+    background-color: var(--secondary-button-bg);
+    color: var(--primary-button-bg);
+    font-weight: 600;
+}
+
+/* Enhanced Responsive Styles */
+/* Mobile Navigation */
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 8px;
+}
+
+/* Make PDF preview more responsive */
+#pdf-preview-modal > div {
+    max-width: min(900px, 90vw);
+    width: 90vw;
+    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#pdf-preview-frame {
+    width: 100%;
+    height: 70vh;
+    min-height: 300px;
+}
+
+/* Make modal more responsive */
+.modal-content {
+    max-width: min(1000px, 90vw);
+    width: 90vw;
+    padding: clamp(20px, 5vw, 40px);
+}
+
+/* Thank you page responsive fixes */
+.download-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Improved Responsive Design */
+@media (max-width: 1100px) {
+    /* Modal improvements */
+    .modal-content {
+        padding: 30px;
+        gap: 20px;
+    }
+    
+    /* Book layout improvements */
+    .book-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+}
+
 @media (max-width: 992px) {
     #features, .steps-grid, .review-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
+    
+    /* Modal content reorganization */
+    .modal-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        overflow-y: auto;
+    }
+    
+    .modal-content > div:not(.modal-image-placeholder) {
+        max-width: 100%;
+        min-width: auto;
+    }
+    
+    .modal-description {
+        text-align: left;
+    }
+    
+    /* PDF preview adjustments */
+    #pdf-preview-frame {
+        height: 60vh;
+    }
 }
+
 @media (max-width: 768px) {
-    #hero h1 { font-size: 2.5rem; }
-    h2 { font-size: 2rem; }
-    .nav-links, .login-btn { display: none; } /* Simple mobile view; implement hamburger menu in JS */
+    /* Navigation for mobile */
+    .mobile-nav-toggle {
+        display: block;
+    }
+    
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        z-index: 100;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-links a {
+        padding: 12px;
+        text-align: center;
+        width: 100%;
+    }
+    
+    #hero h1 { font-size: clamp(2rem, 8vw, 4rem); }
+    h2 { font-size: clamp(1.75rem, 6vw, 2.75rem); }
+    
+    /* Book grid adjustments */
+    .book-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
     .review-grid {
         grid-template-columns: 1fr;
     }
-    .book-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+    
+    /* Form controls and buttons */
     .filters-section {
         flex-direction: column;
+        align-items: stretch;
     }
+    
     .newsletter form {
         flex-direction: column;
     }
-    .newsletter button {
+    
+    .newsletter button,
+    .action-buttons .cta-button {
         width: 100%;
     }
-}
-@media (max-width: 480px) {
-    .book-grid {
-        grid-template-columns: 1fr;
-    }
-}
-    .filters-section {
+    
+    .book-buttons {
         flex-direction: column;
-    }
-    .newsletter form {
-        flex-direction: column;
-    }
-    .newsletter button {
         width: 100%;
     }
-
-@media (max-width: 480px) {
-    .book-grid {
-        grid-template-columns: 1fr;
-    }
-}
-@media (max-width: 900px) {
-    .modal-content {
-        flex-direction: column;
-        gap: 24px;
-        padding: 24px 20px;
-        max-width: 85vw;
-        overflow-y: auto;
-    }
+    
+    /* Modal adjustments */
     .modal-image-placeholder {
-        width: 180px;
-        height: 180px;
-        margin: 0 auto 18px;
-        max-width: 100%;
+        width: 160px;
+        height: 160px;
     }
-    .modal-content > div:not(.modal-image-placeholder) {
-        max-width: 100%;
+    
+    /* PDF preview adjustments */
+    #pdf-preview-frame {
+        height: 50vh;
     }
-    /* Fix review section width */
 }
 
+@media (max-width: 576px) {
+    /* Header spacing */
+    .nav-actions {
+        gap: 8px;
+    }
+    
+    .login-btn, 
+    .cta-button.primary {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    /* Content spacing */
+    #hero {
+        padding: 60px 0;
+    }
+    
+    .container {
+        padding: 0 16px;
+    }
+    
+    /* Book cards */
+    .book-card {
+        padding: 16px;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        padding: 20px 16px;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .modal-buttons button {
+        margin-left: 0 !important;
+        margin-top: 8px;
+    }
+    
+    /* Login page */
+    .login-container {
+        padding: 24px 16px;
+    }
+    
+    /* Thank you page */
+    .download-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+    
+    .download-info {
+        flex-direction: column;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    /* PDF preview adjustments */
+    #pdf-preview-frame {
+        height: 400px;
+    }
+}
+
+@media (max-width: 400px) {
+    .logo-text {
+        font-size: 1.2rem;
+    }
+    
+    /* PDF preview adjustments */
+    #pdf-preview-frame {
+        height: 300px;
+    }
+    
+    /* Very small devices fixes */
+    .modal-content {
+        padding: 16px 12px;
+    }
+    
+    .modal-image-placeholder {
+        width: 140px;
+        height: 140px;
+    }
+    
+    #modalPdfDetails ul {
+        padding-left: 16px;
+    }
+}
+
+/* Fix duplicate media queries */
 @media (max-width: 600px) {
+    /* Consolidated styles */
     .modal-content {
         padding: 16px 12px;
         max-width: 95vw;
     }
-    #pdf-preview-frame {
-        height: 320px;
+    
+    .download-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .download-buttons button {
+        width: 100%;
     }
 }
-@media (max-width: 600px) {
-    .modal-content {
-        padding: 12px 4px;
-    }
-    #pdf-preview-frame {
-        height: 320px;
-    }
-}
-
