@@ -518,35 +518,10 @@
             });
         }
     });
-    
-    // Add mobile navigation toggle
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        
-        if (mobileNavToggle) {
-            mobileNavToggle.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-            });
-        }
-        
-        // Close navigation when clicking outside
-        document.addEventListener('click', function(e) {
-            if (navLinks.classList.contains('active') && 
-                !navLinks.contains(e.target) && 
-                !mobileNavToggle.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
-        });
-        
-        // Close navigation when window is resized
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-            }
-        });
-    });
+
     </script>
+    <script src="script/mobile-nav.js"></script>
+    <script src="script/book-detail.js"></script>
 </body>
 </html>
 
