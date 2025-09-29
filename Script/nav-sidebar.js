@@ -12,21 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    // Add sidebar branding if it doesn't exist
-    if (navLinks && !navLinks.querySelector('.sidebar-logo')) {
-        const sidebarLogo = document.createElement('div');
-        sidebarLogo.className = 'sidebar-logo';
-        
-        // Get the original logo content
-        const originalLogo = document.querySelector('.logo-with-whatsapp');
-        if (originalLogo) {
-            sidebarLogo.innerHTML = originalLogo.innerHTML;
-        } else {
-            sidebarLogo.innerHTML = '<span class="logo-text">Kalpvruksh AI</span>';
-        }
-        
-        // Insert at the beginning of navLinks
-        navLinks.insertBefore(sidebarLogo, navLinks.firstChild);
+    // Remove duplicate sidebar branding if it exists
+    const existingSidebarLogo = navLinks?.querySelector('.sidebar-logo');
+    if (existingSidebarLogo) {
+        existingSidebarLogo.remove();
     }
     
     // Toggle sidebar when menu button is clicked
@@ -47,12 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Close sidebar when ESC key is pressed
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+        if (e.key === 'Escape' && navLinks && navLinks.classList.contains('active')) {
             closeSidebar();
         }
     });
     
     function toggleSidebar() {
+        if (!navLinks) return;
         const isOpen = navLinks.classList.contains('active');
         
         if (isOpen) {
@@ -63,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function openSidebar() {
+        if (!navLinks) return;
         navLinks.classList.add('active');
         overlay.classList.add('active');
         mobileNavToggle.textContent = '✕';
@@ -71,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function closeSidebar() {
+        if (!navLinks) return;
         navLinks.classList.remove('active');
         overlay.classList.remove('active');
         mobileNavToggle.textContent = '☰';
@@ -78,3 +70,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = ''; // Restore scrolling
     }
 });
+    function closeSidebar() {
+        navLinks.classList.remove('active');
+        overlay.classList.remove('active');
+        mobileNavToggle.textContent = '☰';
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+
