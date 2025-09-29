@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Thank You for Your Purchase | Kalpvruksh AI</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -138,6 +138,30 @@
                 width: 100%;
             }
         }
+        
+        /* Additional responsive styles */
+        @media (max-width: 576px) {
+            .thank-you-section {
+                padding: 50px 16px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .order-details {
+                padding: 16px;
+            }
+            
+            .order-table {
+                font-size: 0.9rem;
+            }
+            
+            .order-table td,
+            .order-table th {
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -156,9 +180,10 @@
                 <a href="index.html#chatbot">AI Chatbot</a>
             </div>
             <div class="nav-actions">
-                <a href="#" class="login-btn">Log In</a>
+                <a href="login.html" class="login-btn">Log In</a>
                 <a href="index.html" class="cta-button primary">Try Free</a>
             </div>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
         </nav>
     </header>
 
@@ -214,7 +239,7 @@
                         </div>
                     </div>
                     <div class="download-buttons">
-                        <button class="cta-button primary" onclick="downloadExistingPDF('Navaratri-Limited-Edition-prompt-book_compressed .pdf')">Download Book</button>
+                        <button class="cta-button primary" onclick="downloadExistingPDF('Navaratri-Limited-Edition-prompt-book_compressed.pdf')">Download Book</button>
                         <button class="cta-button secondary" onclick="generateReceiptPDF()">Download Receipt</button>
                     </div>
                 </div>
@@ -284,8 +309,24 @@
                 document.getElementById('order-number').textContent = orderId;
             }
             
-            // Retrieve purchase details (this would normally come from backend)
-            // For demo, we're using static data
+            // Mobile navigation
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileNavToggle && navLinks) {
+                mobileNavToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+                
+                // Close navigation when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (navLinks.classList.contains('active') && 
+                        !navLinks.contains(e.target) && 
+                        !mobileNavToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            }
         });
         
         // Download existing PDF function
@@ -336,7 +377,7 @@
             doc.line(20, 92, 190, 92);
             
             // Add item
-            doc.text("Navaratri-Limited-Edition-prompt-book_compressed .pdf", 20, 100);
+            doc.text("Navaratri-Limited-Edition-prompt-book_compressed.pdf", 20, 100);
             doc.text("₹100", 150, 100);
             
             // Add discount
