@@ -2,25 +2,306 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kalpvruksh AI E-Book Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Book Details | Kalpvruksh AI</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <!-- Add Razorpay SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        .book-detail-section {
+            padding: 60px 0;
+        }
+        
+        .book-detail-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        
+        .book-image-slideshow {
+            flex: 0 0 300px;
+            height: 400px;
+            position: relative;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .slideshow-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.3);
+            border: none;
+            z-index: 10;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        /* Dots/indicators */
+        .dots-container {
+            position: absolute;
+            bottom: 12px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        
+        .active-dot, .dot:hover {
+            background-color: white;
+        }
+        
+        .book-detail-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .book-detail-content h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        
+        .book-author-large {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 24px;
+        }
+        
+        .book-price-large {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 24px;
+        }
+        
+        .book-description {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--secondary-color);
+        }
+        
+        .book-actions {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        
+        .book-actions button {
+            padding: 14px 28px;
+            font-size: 1.05rem;
+        }
+        
+        .book-details-table {
+            margin: 30px 0;
+            width: 100%;
+        }
+        
+        .book-details-table th {
+            text-align: left;
+            padding: 12px;
+            background-color: #f7fcfd;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .book-details-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sample-preview-btn {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-button-bg);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .back-to-store {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary-color);
+            margin-bottom: 24px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-to-store:hover {
+            color: var(--primary-button-bg);
+        }
+        
+        .related-books {
+            margin-top: 60px;
+        }
+        
+        .related-books h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+        
+        /* Add styles for detailed description */
+        .product-section {
+            margin-bottom: 40px;
+        }
+        
+        .product-section h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+        
+        .product-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .product-section ul li {
+            margin-bottom: 8px;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 30px 0;
+            opacity: 0.6;
+        }
+        
+        .prompt-example {
+            background-color: #f7fcfd;
+            padding: 15px;
+            border-left: 3px solid var(--primary-button-bg);
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        
+        .testimonial {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-author {
+            display: block;
+            text-align: right;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .book-detail-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .book-image-slideshow {
+                width: 280px;
+                height: 350px;
+                margin-bottom: 20px;
+            }
+            
+            .book-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .book-actions button {
+                width: 100%;
+            }
+            
+            .prev, .next {
+                padding: 10px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
     <header>
         <nav class="container">
-            <a href="#" class="logo-with-whatsapp">
+            <a href="index.html" class="logo-with-whatsapp">
                 <span class="logo-img-wrapper">
                     <img src="WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg" alt="Kalpvruksh AI Logo" class="logo-img">
                 </span>
                 <span class="logo-text">Kalpvruksh AI</span>
             </a>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
             <div class="nav-links">
                 <a href="ebook-store.html" class="active">E-Book Store</a>
                 <a href="index.html#how-it-works">How It Works</a>
@@ -29,123 +310,103 @@
             </div>
             <div class="nav-actions">
                 <span id="cart-count" style="margin-right:16px; font-weight:600;">Cart: <span id="cart-items">0</span></span>
-                <a href="#" class="login-btn">Log In</a>
+                <a href="login.html" class="login-btn">Log In</a>
                 <a href="index.html" class="cta-button primary">Try Free</a>
             </div>
         </nav>
     </header>
 
     <main>
-
-        <!-- Promotional Banner -->
-        <section class="promo-banner container">
-            <p>🔥 Special Offer: Buy 2 e-books, Get 1 FREE! Limited time only.</p>
-        </section>
-
-            <!-- Search & Filters -->
-        <section class="container filters-section">
-            <input type="text" id="searchInput" placeholder="Search for books..." aria-label="Search books" />
-        </section>
-
-        <!-- Referral System Section -->
-
-        <!-- Hero Section -->
-        <section id="ebook-hero" class="container">
-            <h1>Master AI with Our Expert E-Books</h1>
-            <p class="subtitle">Explore strategic playbooks, prompt packs, and in-depth AI guides.</p>
-        </section>
-
-        <!-- Featured Bestsellers -->
-        <section id="featured" class="container">
-            <h2>Featured Bestsellers</h2>
-            <div class="book-grid">
-                <div class="book-card" data-id="1" data-title="The Prompt Engineer's Handbook" data-author="Alex Chen" data-price="₹199" data-desc="A comprehensive guide to prompt engineering for AI." data-pages="120" data-size="2.4 MB" data-sample="Kalpvruksh%20AI%20-%20Win%20with%20AI-Powered%20Email%20Prompts.pdf" data-category="prompt" tabindex="0">
-                    <div class="book-image-placeholder"></div>
-                    <h3>The Prompt Engineer's Handbook</h3>
-                    <p class="book-author">By Alex Chen</p>
-                    <p class="book-price">₹199</p>
-                    <div class="book-buttons">
-                        <button class="cta-button primary buy-now-btn" onclick="initiatePayment(1)">Buy Now</button>
-                        <button class="cta-button secondary open-modal-btn">View Details</button>
+        <section class="book-detail-section container">
+            <a href="ebook-store.html" class="back-to-store">← Back to E-Book Store</a>
+            
+            <div class="book-detail-container">
+                <!-- Replace placeholder images with actual book images -->
+                <div class="book-image-slideshow">
+                    <div class="slideshow-container">
+                        <div class="slide active">
+                            <img src="book-image/SAle.png" alt="Book cover">
+                        </div>
+                        <div class="slide">
+                            <img src="book-image/SAle.jpg" alt="Book image 2">
+                        </div>
+                        <div class="slide">
+                            <img src="book-image/Gemini_Generated_Image_v134cqv134cqv134.png" alt="Book image 3">
+                        </div>
+                        <div class="slide">
+                            <img src="book-image/Gemini_Generated_Image_klt4bqklt4bqklt4.png" alt="Book image 4">
+                        </div>
+                        <div class="slide">
+                            <img src="book-image/SAle.png" alt="Book image 5">
+                        </div>
+                        
+                        <button class="prev" aria-label="Previous slide">❮</button>
+                        <button class="next" aria-label="Next slide">❯</button>
+                        
+                        <div class="dots-container">
+                            <span class="dot active-dot" data-index="0" aria-label="Go to slide 1"></span>
+                            <span class="dot" data-index="1" aria-label="Go to slide 2"></span>
+                            <span class="dot" data-index="2" aria-label="Go to slide 3"></span>
+                            <span class="dot" data-index="3" aria-label="Go to slide 4"></span>
+                            <span class="dot" data-index="4" aria-label="Go to slide 5"></span>
+                        </div>
                     </div>
                 </div>
-                <div class="book-card" data-id="2" data-title="AI for Indian Businesses" data-author="Priya Sharma" data-price="₹299" data-desc="Strategies and case studies for AI adoption in Indian businesses." data-pages="98" data-size="1.8 MB" data-sample="sample-ai-india.pdf" data-category="strategy" tabindex="0">
-                    <div class="book-image-placeholder"></div>
-                    <h3>AI for Indian Businesses</h3>
-                    <p class="book-author">By Priya Sharma</p>
-                    <p class="book-price">₹299</p>
-                    <div class="book-buttons">
-                        <button class="cta-button primary buy-now-btn" onclick="initiatePayment(2)">Buy Now</button>
-                        <button class="cta-button secondary open-modal-btn">View Details</button>
+                
+                <div class="book-detail-content">
+                    <h1 id="book-title">Book Title</h1>
+                    <p class="book-author-large" id="book-author">By Author Name</p>
+                    <p class="book-price-large" id="book-price">₹199</p>
+                    
+                    <div class="book-actions">
+                        <button class="cta-button primary" id="buy-now-btn">Buy Now</button>
                     </div>
-                </div>
-                <div class="book-card" data-id="3" data-title="Sales Automation Playbook" data-author="Rahul Singh" data-price="₹249" data-desc="Automate your sales process with proven AI strategies." data-pages="110" data-size="2.1 MB" data-sample="#" data-category="sales" tabindex="0">
-                    <div class="book-image-placeholder"></div>
-                    <h3>Sales Automation Playbook</h3>
-                    <p class="book-author">By Rahul Singh</p>
-                    <p class="book-price">₹249</p>
-                    <div class="book-buttons">
-                        <button class="cta-button primary buy-now-btn" onclick="initiatePayment(3)">Buy Now</button>
-                        <button class="cta-button secondary open-modal-btn">View Details</button>
+                    
+                    <div id="detailed-description">
+                        <!-- This is where the detailed content will be inserted -->
                     </div>
+                    
+                    <table class="book-details-table">
+                        <tr>
+                            <th colspan="2">Book Details</th>
+                        </tr>
+                        <tr>
+                            <td>Format</td>
+                            <td>PDF</td>
+                        </tr>
+                        <tr>
+                            <td>Pages</td>
+                            <td id="book-pages">120</td>
+                        </tr>
+                        <tr>
+                            <td>File Size</td>
+                            <td id="book-size">2.4 MB</td>
+                        </tr>
+                        <tr>
+                            <td>Sample</td>
+                            <td><span class="sample-preview-btn" id="view-sample-btn">View Sample Pages</span></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-        </section>
-
-        <!-- Customer Reviews -->
-        <section id="reviews" class="container">
-            <h2>Customer Reviews</h2>
-            <div class="review-grid" id="staticReviews">
-                <div class="review-card">
-                    <p>"The prompt engineering guide helped me close deals faster. Highly recommended!"</p>
-                    <strong>- Nisha Kumar</strong>
+            
+            <section class="related-books">
+                <h2>You May Also Like</h2>
+                <div class="book-grid" id="related-books-grid">
+                    <!-- Related books will be dynamically loaded here -->
                 </div>
-                <div class="review-card">
-                    <p>"Clear, concise, and practical advice. The best sales automation book I've read."</p>
-                    <strong>- Arjun Patel</strong>
-                </div>
-            </div>
-        </section>
-
-        <!-- Newsletter Signup -->
-        <section class="container newsletter">
-            <h3>Stay Updated With New Releases & Offers</h3>
-            <form id="newsletter-form" aria-label="Subscribe to newsletter">
-                <input type="email" id="emailInput" placeholder="Enter your email" required />
-                <button type="submit" class="cta-button primary">Subscribe</button>
-            </form>
-            <p id="newsletterMessage" role="alert" aria-live="polite"></p>
-        </section>
-
-        <!-- FAQ Section -->
-        <section class="container faq-section">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false" aria-controls="faq1" id="faq1button">
-                    What file formats do I get?
-                </button>
-                <div id="faq1" class="faq-answer" role="region" aria-labelledby="faq1button" hidden>
-                    <p>You receive PDF and EPUB formats compatible with all popular readers.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false" aria-controls="faq2" id="faq2button">
-                    How will I receive my e-book after purchase?
-                </button>
-                <div id="faq2" class="faq-answer" role="region" aria-labelledby="faq2button" hidden>
-                    <p>Purchased e-books are available for immediate download from your account dashboard and emailed to you.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false" aria-controls="faq3" id="faq3button">
-                    Is my payment information secure?
-                </button>
-                <div id="faq3" class="faq-answer" role="region" aria-labelledby="faq3button" hidden>
-                    <p>Yes, we use Razorpay's secure payment gateway to ensure your transaction is safe.</p>
-                </div>
-            </div>
+            </section>
         </section>
     </main>
+
+    <!-- PDF Preview Modal -->
+    <div id="pdf-preview-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:10000; align-items:center; justify-content:center; padding: 15px;">
+        <div style="background:#fff; border-radius:16px; max-width:min(900px, 95vw); width:95vw; margin:auto; padding:24px 16px 16px; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column; max-height: 90vh; overflow-y: auto;">
+            <button id="close-pdf-preview" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            <h3 style="margin-bottom:16px; color:var(--primary-color);">Sample Pages Preview</h3>
+            <iframe id="pdf-preview-frame" src="" style="width:100%; height:600px; border:none; border-radius:8px; background:#f7fcfd;"></iframe>
+        </div>
+    </div>
 
     <footer>
         <div class="container footer-grid">
@@ -190,320 +451,7 @@
         </div>
     </footer>
 
-    <!-- Book Detail Modal -->
-    <div id="bookModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle" aria-modal="true" style="display:none;">
-        <div class="modal-content">
-            <button class="modal-close" id="closeModal" aria-label="Close modal">&times;</button>
-            <div class="modal-image-placeholder"></div>
-            <div>
-                <h2 id="modalTitle"></h2>
-                <p class="modal-author"></p>
-                <p class="modal-description"></p>
-                <div id="modalPdfDetails">
-                    <h4>PDF Details</h4>
-                    <ul>
-                        <li><strong>Pages:</strong> <span id="modalPdfPages"></span></li>
-                        <li><strong>File Size:</strong> <span id="modalPdfSize"></span></li>
-                        <li><strong>Format:</strong> PDF</li>
-                        <li><strong>Sample:</strong> <a href="#" id="modalPdfSampleLink" style="color:var(--primary-button-bg); text-decoration:underline;">View Sample Pages</a></li>
-                    </ul>
-                </div>
-                <div class="modal-buttons">
-                    <button class="cta-button primary" id="modalBuyBtn">Buy Now</button>
-                    <button class="cta-button secondary" id="modalAddToCartBtn" style="margin-left:8px;">Add to Cart</button>
-                    <button class="cta-button secondary" id="modalDownloadBtn" style="margin-left:8px;">Download Free</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PDF Preview Modal -->
-    <div id="pdf-preview-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:10000; align-items:center; justify-content:center;">
-        <div style="background:#fff; border-radius:16px; max-width:900px; width:98%; margin:auto; padding:24px 24px 0 24px; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column;">
-            <button id="close-pdf-preview" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-            <h3 style="margin-bottom:16px; color:var(--primary-color);">Sample Pages Preview</h3>
-            <iframe id="pdf-preview-frame" src="" style="width:100%; height:600px; border:none; border-radius:8px; background:#f7fcfd;"></iframe>
-        </div>
-    </div>
-
-    <script>
-    // --- Cart System ---
-    let cartCount = 0;
-    document.getElementById('cart-items').textContent = cartCount;
-
-    // --- Book Data ---
-    const books = [
-        {
-            id: 1,
-            title: "The Prompt Engineer's Handbook",
-            author: "Alex Chen",
-            price: "₹199",
-            priceAmount: 199,
-            desc: "A comprehensive guide to prompt engineering for AI.",
-            pages: "120",
-            size: "2.4 MB",
-            sample: "Kalpvruksh%20AI%20-%20Win%20with%20AI-Powered%20Email%20Prompts.pdf",
-            category: "prompt",
-            image: ""
-        },
-        {
-            id: 2,
-            title: "AI for Indian Businesses",
-            author: "Priya Sharma",
-            price: "₹299",
-            priceAmount: 299,
-            desc: "Strategies and case studies for AI adoption in Indian businesses.",
-            pages: "98",
-            size: "1.8 MB",
-            sample: "sample-ai-india.pdf",
-            category: "strategy",
-            image: ""
-        },
-        {
-            id: 3,
-            title: "Sales Automation Playbook",
-            author: "Rahul Singh",
-            price: "₹249",
-            priceAmount: 249,
-            desc: "Automate your sales process with proven AI strategies.",
-            pages: "110",
-            size: "2.1 MB",
-            sample: "#",
-            category: "sales",
-            image: ""
-        }
-    ];
-
-    // --- Reviews Storage (in-memory) ---
-    const reviews = {
-        1: [],
-        2: [],
-        3: []
-    };
-
-    // --- Modal Logic ---
-    function openBookModal(bookId) {
-        const book = books.find(b => b.id == bookId);
-        document.getElementById('modalTitle').textContent = book.title;
-        document.querySelector('.modal-author').textContent = "By " + book.author;
-        document.querySelector('.modal-image-placeholder').innerHTML = '<div class="book-image-placeholder"></div>';
-        document.querySelector('.modal-description').textContent = book.desc;
-        document.getElementById('modalPdfPages').textContent = book.pages;
-        document.getElementById('modalPdfSize').textContent = book.size;
-        document.getElementById('modalPdfSampleLink').href = book.sample;
-        document.getElementById('modalBuyBtn').onclick = function() {
-            initiatePayment(book.id);
-        };
-        document.getElementById('modalAddToCartBtn').onclick = function() {
-            cartCount++;
-            document.getElementById('cart-items').textContent = cartCount;
-            this.textContent = "Added!";
-            setTimeout(() => { this.textContent = "Add to Cart"; }, 1200);
-        };
-        
-        // New Download Button functionality
-        document.getElementById('modalDownloadBtn').onclick = function() {
-            downloadPDF("navarati-Image-prompt book (1).pdf");
-            this.textContent = "Downloaded!";
-            setTimeout(() => { this.textContent = "Download Free"; }, 1500);
-        };
-        
-        // Render reviews
-        const reviewsList = document.getElementById('modalReviewsList');
-        if (reviewsList) {
-            reviewsList.innerHTML = "";
-            reviews[book.id].forEach(r => {
-                const div = document.createElement('div');
-                div.style.margin = "8px 0";
-                div.innerHTML = `<strong>${r.name}:</strong> <span>${r.text}</span>`;
-                reviewsList.appendChild(div);
-            });
-        }
-        
-        // PDF sample preview
-        document.getElementById('modalPdfSampleLink').onclick = function(e) {
-            e.preventDefault();
-            document.getElementById('pdf-preview-frame').src = book.sample;
-            document.getElementById('pdf-preview-modal').style.display = 'flex';
-        };
-        
-        document.getElementById('bookModal').style.display = 'flex';
-        document.getElementById('bookModal').setAttribute('aria-hidden', 'false');
-    }
-    
-    // Download PDF function
-    function downloadPDF(filename) {
-        // Create an anchor element
-        const link = document.createElement('a');
-        
-        // Set attributes for download
-        link.href = filename;
-        link.download = filename;
-        
-        // Append to document, trigger click, and remove
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-
-    // --- Open Modal from Book Cards ---
-    function attachModalEvents() {
-        document.querySelectorAll('.open-modal-btn').forEach(btn => {
-            btn.onclick = function(e) {
-                const card = btn.closest('.book-card');
-                openBookModal(card.getAttribute('data-id'));
-            };
-        });
-        document.querySelectorAll('.book-card').forEach(card => {
-            card.onkeydown = function(e) {
-                if (e.key === "Enter") openBookModal(card.getAttribute('data-id'));
-            };
-        });
-    }
-    attachModalEvents();
-
-    // Fix for allBooksGrid if it exists
-    const allBooksGrid = document.getElementById('allBooksGrid');
-    if (allBooksGrid) {
-        const observer = new MutationObserver(attachModalEvents);
-        observer.observe(allBooksGrid, { childList: true });
-    }
-
-    // --- Fix Close Modal Button ---
-    document.getElementById('closeModal').addEventListener('click', function() {
-        document.getElementById('bookModal').style.display = 'none';
-        document.getElementById('bookModal').setAttribute('aria-hidden', 'true');
-    });
-    
-    // --- Fix Close Modal on Outside Click ---
-    document.getElementById('bookModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            this.style.display = 'none';
-            this.setAttribute('aria-hidden', 'true');
-        }
-    });
-
-    // --- Fix PDF Preview Close Button ---
-    document.getElementById('close-pdf-preview').addEventListener('click', function() {
-        document.getElementById('pdf-preview-modal').style.display = 'none';
-        document.getElementById('pdf-preview-frame').src = '';
-    });
-    
-    // --- Fix PDF Preview Outside Click Close ---
-    document.getElementById('pdf-preview-modal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            this.style.display = 'none';
-            document.getElementById('pdf-preview-frame').src = '';
-        }
-    });
-
-    // --- Newsletter Signup ---
-    document.getElementById('newsletter-form').onsubmit = function(e) {
-        e.preventDefault();
-        const email = document.getElementById('emailInput').value.trim();
-        if (email) {
-            document.getElementById('newsletterMessage').textContent = "Thank you for subscribing!";
-            this.reset();
-        }
-    };
-
-    // --- FAQ Toggle ---
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.onclick = function() {
-            const answer = document.getElementById(btn.getAttribute('aria-controls'));
-            const expanded = btn.getAttribute('aria-expanded') === "true";
-            btn.setAttribute('aria-expanded', !expanded);
-            answer.hidden = expanded;
-        };
-    });
-
-    // Razorpay Payment Integration
-    function initiatePayment(bookId) {
-        try {
-            console.log("Initiating payment for book ID:", bookId);
-            const book = books.find(b => b.id == bookId);
-            if (!book) {
-                console.error("Book not found with ID:", bookId);
-                return;
-            }
-            
-            // Convert price string to number and ensure it's a valid amount
-            let priceAmount = book.priceAmount || 199; // Default to 199 if not set
-            
-            const options = {
-                key: 'rzp_live_RMvL1ArRi2m0Z9',
-                amount: priceAmount * 100, // Amount in smallest currency unit (paise for INR)
-                currency: 'INR',
-                name: 'Kalpvruksh AI',
-                description: `Purchase: ${book.title}`,
-                image: 'WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg',
-                handler: function (response) {
-                    console.log("Payment successful:", response);
-                    alert("Payment successful! Redirecting to thank you page...");
-                    window.location.href = `thankyou.html?order_id=${response.razorpay_payment_id}&book_id=${bookId}`;
-                },
-                prefill: {
-                    name: '',
-                    email: '',
-                    contact: ''
-                },
-                notes: {
-                    address: 'Kalpvruksh AI Office',
-                    book_id: bookId
-                },
-                theme: {
-                    color: '#2471c9'
-                },
-                modal: {
-                    ondismiss: function() {
-                        console.log("Payment modal dismissed");
-                    }
-                }
-            };
-            
-            console.log("Razorpay options:", options);
-            
-            // Create a new instance for each payment attempt
-            const rzp = new window.Razorpay(options);
-            
-            // Add event listeners for payment issues
-            rzp.on('payment.failed', function (response){
-                console.error("Payment failed:", response.error);
-                alert(`Payment failed: ${response.error.description}`);
-            });
-            
-            // Open the payment dialog
-            rzp.open();
-        } catch (error) {
-            console.error("Error initiating payment:", error);
-            alert("Could not initialize payment. Please try again later.");
-        }
-    }
-
-    // Make sure the Razorpay object is loaded before trying to use it
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if Razorpay is loaded
-        if (typeof Razorpay === 'undefined') {
-            console.error("Razorpay SDK not loaded!");
-            // Add fallback for payment buttons
-            document.querySelectorAll('.buy-now-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    alert("Payment gateway is currently unavailable. Please try again later.");
-                });
-            });
-        } else {
-            console.log("Razorpay SDK loaded successfully");
-            
-            // Add direct event listeners to buttons for better reliability
-            document.querySelectorAll('.buy-now-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const bookId = this.closest('.book-card').getAttribute('data-id');
-                    initiatePayment(bookId);
-                });
-            });
-        }
-    });
-    </script>
+    <script src="script.js"></script>
+    <script src="script/book-detail.js"></script>
 </body>
 </html>
-
