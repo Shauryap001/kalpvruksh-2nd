@@ -151,7 +151,7 @@ button, .cta-button, .nav-links a, input[type="submit"] {
         background: white;
         flex-direction: column;
         align-items: flex-start;
-        padding: 72px 0 20px 0; /* Add padding on top for the header */
+        padding: 20px 0; /* Remove top padding for header */
         z-index: 1100;
         transition: left 0.3s ease-in-out;
         box-shadow: none;
@@ -206,30 +206,10 @@ button, .cta-button, .nav-links a, input[type="submit"] {
         from { opacity: 0; }
         to { opacity: 1; }
     }
-    
-    /* Add sidebar branding */
-    .sidebar-logo {
-        padding: 24px 24px 16px;
-        border-bottom: 1px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: white;
-    }
-    
-    .sidebar-logo .logo-text {
-        font-size: 1.3rem;
-    }
-    
-    .sidebar-logo .logo-img-wrapper {
-        width: 32px;
-        height: 32px;
-    }
-    
+
+    /* Remove sidebar-logo styles since we don't need them anymore */
+    /* We'll use the existing logo in the header */
+
     /* Hero section adjustments */
     #hero {
         padding: 50px 0;
@@ -640,6 +620,26 @@ button, .cta-button, .nav-links a, input[type="submit"] {
         height: 200px;
     }
 }
+
+/* Dark Mode Support (If System Preference) */
+@media (prefers-color-scheme: dark) {
+    .pdf-preview-modal {
+        background: rgba(0,0,0,0.9);
+    }
+}
+
+/* Focus Visible for Accessibility */
+:focus-visible {
+    outline: 3px solid var(--primary-button-bg);
+    outline-offset: 2px;
+}
+
+/* CSS Variables for Theme Switching */
+:root {
+    --header-height: 72px;
+    --footer-padding: 80px;
+}
+
 
 /* Dark Mode Support (If System Preference) */
 @media (prefers-color-scheme: dark) {
