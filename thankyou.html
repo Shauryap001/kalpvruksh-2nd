@@ -275,7 +275,7 @@
             
             // Set up download button - Fixed to always download the specific file
             document.getElementById('download-book-btn').addEventListener('click', function() {
-                // Always use the exact filename with space preserved
+                // Always use the exact filename with the space preserved
                 const pdfToDownload = "Navaratri-Limited-Edition-prompt-book_compressed .pdf";
                 
                 console.log("Downloading PDF:", pdfToDownload);
@@ -349,5 +349,7 @@
             }
         });
     </script>
+    <!-- Add this before the closing </body> tag -->
+    <script src="script/download-handler.js"></script>
 </body>
 </html>
