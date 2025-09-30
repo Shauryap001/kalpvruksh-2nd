@@ -136,7 +136,7 @@ button, .cta-button, .nav-links a, input[type="submit"] {
 @media (max-width: 767px) {
     /* Enable mobile navigation */
     .mobile-nav-toggle {
-        display: block;
+        display: block !important;
         position: relative;
         z-index: 1200; /* Ensure it's above the sidebar */
     }
@@ -151,18 +151,19 @@ button, .cta-button, .nav-links a, input[type="submit"] {
         background: white;
         flex-direction: column;
         align-items: flex-start;
-        padding: 20px 0; /* Remove top padding for header */
+        padding: 80px 0 20px 0;
         z-index: 1100;
         transition: left 0.3s ease-in-out;
         box-shadow: none;
         overflow-y: auto;
         border-right: 1px solid var(--border-color);
+        margin-left: 0;
     }
     
     /* When active, slide in from left */
     .nav-links.active {
         left: 0;
-        box-shadow: 4px 0 16px rgba(0,0,0,0.1);
+        box-shadow: 2px 0 10px rgba(0,0,0,0.08);
         display: flex;
     }
     
@@ -175,14 +176,22 @@ button, .cta-button, .nav-links a, input[type="submit"] {
         border-bottom: 1px solid var(--border-color);
         display: flex;
         align-items: center;
+        position: relative; /* Add this for proper click handling */
+        z-index: 1110; /* Make sure links are above overlay */
+        color: var(--primary-color); /* Ensure proper color */
+        transition: background-color 0.2s ease;
     }
     
-    /* Add icons to nav links if desired */
+    .nav-links a:active {
+        background-color: #e8f4f8; /* Better active state */
+    }
+    
+    /* Add icons to nav links with less prominence */
     .nav-links a::before {
-        content: "→";
+        content: "•"; /* Changed from arrow to bullet */
         margin-right: 12px;
         font-size: 1.2rem;
-        opacity: 0.7;
+        opacity: 0.5;
     }
     
     /* Add overlay when sidebar is open */
@@ -198,17 +207,46 @@ button, .cta-button, .nav-links a, input[type="submit"] {
         animation: fadeIn 0.3s;
     }
     
-    .nav-overlay.active {
-        display: block;
-    }
     
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
     }
 
-    /* Remove sidebar-logo styles since we don't need them anymore */
-    /* We'll use the existing logo in the header */
+    /* Add site branding to top of sidebar */
+    .nav-links::before {
+        content: "Kalpvruksh AI";
+        display: block;
+        position: absolute;
+        top: 20px;
+        left: 24px;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--primary-color);
+    }
+
+    /* Make main header fixed for mobile for better navigation access */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    
+    /* Add space below header to prevent content overlap */
+    main {
+        padding-top: 72px;
+    }
+    
+    /* Improve active state styling */
+    .nav-links a.active {
+        background-color: #f0f7fa;
+        color: var(--primary-button-bg);
+        font-weight: 600;
+    }
 
     /* Hero section adjustments */
     #hero {
