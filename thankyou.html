@@ -245,7 +245,7 @@
                     id: 1,
                     title: "Navaratri Limited Edition Prompt Book",
                     price: 20,
-                    pdfPath: "Navaratri-Limited-Edition-prompt-book_compressed .pdf"
+                    pdfPath: "Navaratri-Limited-Edition-prompt-book_compressed.pdf" // Fixed spacing issue
                 },
                 {
                     id: 2,
@@ -273,23 +273,59 @@
             const now = new Date();
             document.getElementById('purchase-date').textContent = now.toLocaleDateString();
             
-            // Set up download button
+            // Set up download button - Improved download functionality
             document.getElementById('download-book-btn').addEventListener('click', function() {
-                downloadPdf(purchasedBook.pdfPath, purchasedBook.title);
-                this.textContent = 'Download Complete!';
+                // For book ID 1, always use the specific file regardless of what's in the data
+                const pdfToDownload = bookId == 1 ? 
+                    "Navaratri-Limited-Edition-prompt-book_compressed.pdf" : 
+                    purchasedBook.pdfPath;
+                
+                console.log("Downloading PDF:", pdfToDownload);
+                
+                // Try to download the file
+                downloadPdf(pdfToDownload, purchasedBook.title);
+                
+                // Update button text to provide feedback
+                this.textContent = 'Download Started!';
                 setTimeout(() => {
                     this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>Download E-Book';
                 }, 2000);
             });
             
-            // Function to download PDF
+            // Enhanced PDF download function with error handling
             function downloadPdf(filePath, fileName) {
-                const link = document.createElement('a');
-                link.href = filePath;
-                link.download = fileName.replace(/\s+/g, '-').toLowerCase() + '.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                try {
+                    // Create a download link
+                    const link = document.createElement('a');
+                    
+                    // Make sure there are no spaces in the PDF path
+                    const cleanFilePath = filePath.trim();
+                    link.href = cleanFilePath;
+                    
+                    // Set the download attribute with a clean filename
+                    link.download = fileName.replace(/\s+/g, '-').toLowerCase() + '.pdf';
+                    
+                    // Make the link invisible
+                    link.style.display = 'none';
+                    
+                    // Add link to the document, click it, then remove it
+                    document.body.appendChild(link);
+                    link.click();
+                    
+                    // Log success message
+                    console.log("Download initiated for:", cleanFilePath);
+                    
+                    // Remove link after a delay to ensure download starts
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                    }, 100);
+                    
+                    return true;
+                } catch (error) {
+                    console.error("Error downloading PDF:", error);
+                    alert("There was an issue downloading your book. Please try again or contact support.");
+                    return false;
+                }
             }
             
             // Mobile navigation setup
