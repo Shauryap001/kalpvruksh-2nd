@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Thank You for Downloading | Kalpvruksh AI</title>
+    <title>Thank You for Your Purchase | Kalpvruksh AI</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -114,6 +114,34 @@
             margin-right: 8px;
         }
         
+        /* Order details styling */
+        .order-details {
+            margin: 30px auto;
+            max-width: 500px;
+            background-color: #f7fcfd;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: left;
+        }
+        
+        .order-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-detail-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Support section styling */
+        .support-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+        
         @media (max-width: 600px) {
             .thank-you-container {
                 padding: 30px 20px;
@@ -182,16 +210,35 @@
     <main>
         <div class="container thank-you-container">
             <div class="success-icon">✓</div>
-            <h1>Thank You!</h1>
+            <h1>Thank You for Your Purchase!</h1>
             <p style="font-size: 1.1rem; color: var(--secondary-color); margin-bottom: 24px;">
-                Your Navaratri Edition Prompt Book is ready for download.
+                Your transaction was successful and your digital product is ready for download.
             </p>
             
+            <!-- Add order details section from the new code -->
+            <div class="order-details">
+                <h2 style="margin-bottom: 16px;">Order Details</h2>
+                <div class="order-detail-item">
+                    <span>Product:</span>
+                    <span id="purchased-product-name">Book Name</span>
+                </div>
+                <div class="order-detail-item">
+                    <span>Order ID:</span>
+                    <span id="order-id">ORD12345</span>
+                </div>
+                <div class="order-detail-item">
+                    <span>Amount Paid:</span>
+                    <span id="amount-paid">₹XX</span>
+                </div>
+                <div class="order-detail-item">
+                    <span>Date:</span>
+                    <span id="purchase-date">XX-XX-XXXX</span>
+                </div>
+            </div>
+            
             <div class="download-section">
-                <h2>Your Free E-Book</h2>
-                <img src="WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg" alt="Navaratri Edition Prompt Book Cover" class="book-image">
-                <h3>Navaratri Edition Prompt Book</h3>
-                <p style="margin-bottom: 20px;">Click the button below to start your download.</p>
+                <h2>Your E-Book is Ready!</h2>
+                <p style="margin-bottom: 20px;">Download your purchase or access it via the email we sent you.</p>
                 
                 <div class="download-buttons">
                     <button class="cta-button primary" id="download-book-btn">
@@ -202,10 +249,11 @@
                         Download E-Book
                     </button>
                     <button class="cta-button secondary" onclick="window.location.href='ebook-store.html'">
-                        Explore More Books
+                        Continue Shopping
                     </button>
                 </div>
                 
+                <!-- Keep the download progress element -->
                 <div class="download-progress" id="download-progress">
                     <p>Downloading... <span id="progress-percent">0%</span></p>
                     <div class="progress-bar">
@@ -214,6 +262,16 @@
                 </div>
             </div>
             
+            <!-- Add support section from the new code -->
+            <div class="support-section">
+                <h3 style="margin-bottom: 12px;">Need Help?</h3>
+                <p>
+                    If you have any questions about your purchase or need assistance, 
+                    please <a href="#" style="color: var(--primary-button-bg);">contact our support team</a>.
+                </p>
+            </div>
+            
+            <!-- Keep the share section from the existing code -->
             <div class="share-section">
                 <h3>Share With Friends</h3>
                 <p>Enjoyed our resources? Share them with others who might benefit!</p>
@@ -281,7 +339,49 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Setup download button to download the specific PDF file
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('order_id');
+            const bookId = urlParams.get('book_id');
+            
+            // Get purchase info from localStorage
+            const purchaseInfo = JSON.parse(localStorage.getItem('purchasedBook')) || {};
+            
+            // Book data - would come from server in a real app
+            const books = [
+                {
+                    id: 1,
+                    title: "Navaratri Limited Edition Prompt Book",
+                    price: 20,
+                    pdfPath: "Navaratri-Limited-Edition-prompt-book_compressed.pdf" // Fixed spacing issue
+                },
+                {
+                    id: 2,
+                    title: "AI for Indian Businesses",
+                    price: 299,
+                    pdfPath: "AI-for-Indian-Businesses.pdf"
+                },
+                {
+                    id: 3,
+                    title: "Sales Automation Playbook",
+                    price: 249,
+                    pdfPath: "Sales-Automation-Playbook.pdf"
+                }
+            ];
+            
+            // Find the purchased book
+            const purchasedBook = books.find(book => book.id == bookId) || books[0];
+            
+            // Update page with order details
+            document.getElementById('purchased-product-name').textContent = purchasedBook.title;
+            document.getElementById('order-id').textContent = orderId || 'N/A';
+            document.getElementById('amount-paid').textContent = `₹${purchasedBook.price}`;
+            
+            // Set current date
+            const now = new Date();
+            document.getElementById('purchase-date').textContent = now.toLocaleDateString();
+            
+            // Set up download button - Fixed to always download the specific file
             document.getElementById('download-book-btn').addEventListener('click', function() {
                 // Show download progress
                 const progressElement = document.getElementById('download-progress');
@@ -301,7 +401,40 @@
                         clearInterval(interval);
                         
                         // After "download completes", trigger actual download
-                        downloadPDF();
+                        // Always use the exact filename with the space preserved
+                        const pdfToDownload = "Navaratri-Limited-Edition-prompt-book_compressed .pdf";
+                
+                        console.log("Downloading PDF:", pdfToDownload);
+                        
+                        // Try to download the file with direct approach
+                        try {
+                            // Create a download link with the exact filename
+                            const link = document.createElement('a');
+                            link.href = pdfToDownload;
+                            link.download = pdfToDownload;
+                            link.target = "_blank";
+                            
+                            // Make the link invisible
+                            link.style.display = 'none';
+                            
+                            // Add link to the document, click it, then remove it
+                            document.body.appendChild(link);
+                            link.click();
+                            
+                            // Log success message
+                            console.log("Download initiated for:", pdfToDownload);
+                            
+                            // Remove link after a delay
+                            setTimeout(() => {
+                                document.body.removeChild(link);
+                            }, 100);
+                            
+                        } catch (error) {
+                            console.error("Error downloading PDF:", error);
+                            
+                            // Fallback method - open in new window
+                            window.open(pdfToDownload, "_blank");
+                        }
                         
                         // Update button text
                         document.getElementById('download-book-btn').innerHTML = `
@@ -324,21 +457,7 @@
                 }, 100);
             });
             
-            // Function to download the PDF
-            function downloadPDF() {
-                // Create an anchor element and set the href attribute to the PDF file
-                const link = document.createElement('a');
-                link.href = "navarati-Image- prompt book (1).pdf"; // This is the exact filename requested
-                link.download = "navarati-Image- prompt book (1).pdf"; // Use the same name for the downloaded file
-                link.target = "_blank"; // Open in a new tab
-                
-                // Append the link to the document body, click it, and remove it
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-            
-            // Mobile navigation setup
+            // Mobile navigation setup - keep existing code
             const mobileToggle = document.querySelector('.mobile-nav-toggle');
             const navLinks = document.querySelector('.nav-links');
             const navOverlay = document.querySelector('.nav-overlay');
@@ -365,5 +484,8 @@
             }
         });
     </script>
+    
+    <!-- Add the download handler script -->
+    <script src="Script/download-handler.js"></script>
 </body>
 </html>
