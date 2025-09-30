@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Login | Kalpvruksh AI</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="responsibe.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -13,22 +14,13 @@
 
     <header>
         <nav class="container">
-            <a href="index.html" class="logo-with-whatsapp">
+            <a href="#" class="logo-with-whatsapp">
                 <span class="logo-img-wrapper">
                     <img src="WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg" alt="Kalpvruksh AI Logo" class="logo-img">
                 </span>
                 <span class="logo-text">Kalpvruksh AI</span>
             </a>
-            <div class="nav-links">
-                <a href="ebook-store.html">E-Book Store</a>
-                <a href="index.html#how-it-works">How It Works</a>
-                <a href="index.html#pricing">Pricing</a>
-                <a href="index.html#chatbot">AI Chatbot</a>
-            </div>
-            <div class="nav-actions">
-                <a href="login.html" class="login-btn active">Log In</a>
-                <a href="index.html" class="cta-button primary">Try Free</a>
-            </div>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">☰</button>
         </nav>
     </header>
 
@@ -121,5 +113,38 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="script/mobile-nav.js"></script>
+</body>
+</html>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2025 Kalpvruksh AI. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Add mobile navigation toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileNavToggle && navLinks) {
+                mobileNavToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+                
+                // Close navigation when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (navLinks.classList.contains('active') && 
+                        !navLinks.contains(e.target) && 
+                        !mobileNavToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="script/nav-sidebar.js"></script>
 </body>
 </html>
