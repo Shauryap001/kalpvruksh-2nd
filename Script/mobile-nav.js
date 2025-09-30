@@ -1,95 +1,110 @@
 /**
- * Mobile Navigation Handler
- * - This script handles the responsive mobile navigation menu
- * - It can be included on any page that needs the mobile menu functionality
+ * Fixed Mobile Navigation Script
+ * Ensures proper sidebar and overlay behavior
  */
-
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("Mobile nav script loaded");
+    
+    // Get required elements
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    if (!mobileNavToggle || !navLinks) return;
+    // Remove any existing click handlers to avoid conflicts
+    const newMobileNavToggle = mobileNavToggle ? mobileNavToggle.cloneNode(true) : null;
+    if (mobileNavToggle && newMobileNavToggle) {
+        mobileNavToggle.parentNode.replaceChild(newMobileNavToggle, mobileNavToggle);
+    }
     
-    // Set initial attributes
-    mobileNavToggle.setAttribute('aria-expanded', 'false');
-    mobileNavToggle.setAttribute('aria-controls', 'nav-links');
+    if (!newMobileNavToggle || !navLinks) {
+        console.error("Required navigation elements not found");
+        return;
+    }
+    
+    // Get or create overlay
+    let navOverlay = document.querySelector('.nav-overlay');
+    if (!navOverlay) {
+        console.log("Creating navigation overlay");
+        navOverlay = document.createElement('div');
+        navOverlay.className = 'nav-overlay';
+        document.body.appendChild(navOverlay);
+    }
+    
+    // Set ARIA attributes
+    newMobileNavToggle.setAttribute('aria-expanded', 'false');
+    newMobileNavToggle.setAttribute('aria-controls', 'nav-links');
     navLinks.id = 'nav-links';
     
-    // Toggle menu when button is clicked
-    mobileNavToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const expanded = navLinks.classList.contains('active');
-        navLinks.classList.toggle('active');
-        mobileNavToggle.setAttribute('aria-expanded', !expanded);
-        mobileNavToggle.textContent = !expanded ? '✕' : '☰';
-    });
+    // Function to open navigation
+    function openNavigation() {
+        console.log("Opening navigation");
+        navLinks.classList.add('active');
+        
+        // Use both class and inline style for maximum compatibility
+        navOverlay.classList.add('active');
+        navOverlay.style.display = 'block';
+        
+        newMobileNavToggle.textContent = '✕';
+        newMobileNavToggle.setAttribute('aria-expanded', 'true');
+    }
     
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (navLinks.classList.contains('active') && 
-            !navLinks.contains(e.target) && 
-            e.target !== mobileNavToggle) {
-            navLinks.classList.remove('active');
-            mobileNavToggle.textContent = '☰';
-            mobileNavToggle.setAttribute('aria-expanded', 'false');
+    // Function to close navigation
+    function closeNavigation() {
+        console.log("Closing navigation");
+        navLinks.classList.remove('active');
+        
+        // Ensure overlay is properly hidden
+        navOverlay.classList.remove('active');
+        
+        // Use setTimeout to allow for transition effects
+        setTimeout(function() {
+            if (!navLinks.classList.contains('active')) {
+                navOverlay.style.display = 'none';
+            }
+        }, 300);
+        
+        newMobileNavToggle.textContent = '☰';
+        newMobileNavToggle.setAttribute('aria-expanded', 'false');
+    }
+    
+    // Toggle navigation when button is clicked
+    newMobileNavToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Mobile nav toggle clicked");
+        
+        if (navLinks.classList.contains('active')) {
+            closeNavigation();
+        } else {
+            openNavigation();
         }
     });
     
-    // Close on window resize (if desktop view)
+    // Close when clicking overlay
+    navOverlay.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Overlay clicked");
+        closeNavigation();
+    });
+    
+    // Close navigation when clicking nav links
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeNavigation);
+    });
+    
+    // Close on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            closeNavigation();
+        }
+    });
+    
+    // Fix display on window resize
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            mobileNavToggle.textContent = '☰';
-            mobileNavToggle.setAttribute('aria-expanded', 'false');
+            closeNavigation();
         }
     });
     
-    // Add swipe to close functionality (optional)
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    navLinks.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-    
-    navLinks.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, {passive: true});
-    
-    function handleSwipe() {
-        if (touchStartX - touchEndX > 50) { // Left swipe
-            navLinks.classList.remove('active');
-            mobileNavToggle.textContent = '☰';
-            mobileNavToggle.setAttribute('aria-expanded', 'false');
-        }
-    }
+    console.log("Mobile navigation initialized successfully");
 });
-
-       // Add mobile navigation toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            
-            if (mobileNavToggle) {
-                mobileNavToggle.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                });
-            }
-            
-            // Close navigation when clicking outside
-            document.addEventListener('click', function(e) {
-                if (navLinks.classList.contains('active') && 
-                    !navLinks.contains(e.target) && 
-                    !mobileNavToggle.contains(e.target)) {
-                    navLinks.classList.remove('active');
-                }
-            });
-            
-            // Close navigation when window is resized
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
