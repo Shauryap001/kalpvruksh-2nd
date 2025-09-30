@@ -291,6 +291,56 @@
                 font-size: 1.2rem;
             }
         }
+        
+        /* PDF Slideshow Styles */
+        .pdf-preview-slideshow {
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        #pdf-canvas {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 4px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .pdf-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .pdf-controls {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255,255,255,0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Ensure prev/next buttons are above PDF */
+        .prev, .next {
+            z-index: 5;
+        }
+        
+        /* Ensure dots are above PDF */
+        .dots-container {
+            z-index: 5;
+        }
     </style>
 </head>
 <body>
@@ -302,53 +352,65 @@
                 </span>
                 <span class="logo-text">Kalpvruksh AI</span>
             </a>
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+            
+            <!-- Mobile visible login button -->
+            <a href="login.html" class="mobile-visible-login">Log In</a>
+            
+            <!-- Mobile navigation toggle button -->
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">☰</button>
+            
             <div class="nav-links">
                 <a href="ebook-store.html" class="active">E-Book Store</a>
                 <a href="index.html#how-it-works">How It Works</a>
                 <a href="index.html#pricing">Pricing</a>
                 <a href="index.html#chatbot">AI Chatbot</a>
+                <!-- Add Try Free button for mobile navigation -->
+                <a href="index.html" class="try-free-mobile">Try Free</a>
+                <!-- Add WhatsApp button in the sidebar for mobile -->
+                <a href="https://chat.whatsapp.com/EBd2C8idP4I438FKaCIEid" target="_blank" class="whatsapp-nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                        <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                    </svg>
+                    Join WhatsApp Community
+                </a>
             </div>
-            <div class="nav-actions">
+            
+            <div class="nav-actions desktop-only">
                 <a href="login.html" class="login-btn">Log In</a>
-                <a href="index.html" class="cta-button primary">Try Free</a>
+                <a href="index.html" class="cta-button primary try-free-btn">Try Free</a>
             </div>
         </nav>
     </header>
+
+    <!-- Add nav overlay div right after header -->
+    <div class="nav-overlay"></div>
 
     <main>
         <section class="book-detail-section container">
             <a href="ebook-store.html" class="back-to-store">← Back to E-Book Store</a>
             
             <div class="book-detail-container">
-                <!-- Replace placeholder images with actual book images -->
-                <div class="book-image-slideshow">
+                <!-- Replace image slideshow with PDF preview slideshow -->
+                <div class="book-image-slideshow pdf-preview-slideshow">
                     <div class="slideshow-container">
-                        <div class="slide active">
-                            <img src="book-image/SAle.png" alt="Book cover">
-                        </div>
-                        <div class="slide">
-                            <img src="book-image/SAle.jpg" alt="Book image 2">
-                        </div>
-                        <div class="slide">
-                            <img src="book-image/Gemini_Generated_Image_v134cqv134cqv134.png" alt="Book image 3">
-                        </div>
-                        <div class="slide">
-                            <img src="book-image/Gemini_Generated_Image_klt4bqklt4bqklt4.png" alt="Book image 4">
-                        </div>
-                        <div class="slide">
-                            <img src="book-image/SAle.png" alt="Book image 5">
+                        <div id="pdf-container">
+                            <!-- PDF will be rendered here -->
+                            <canvas id="pdf-canvas" class="active-slide"></canvas>
                         </div>
                         
-                        <button class="prev" aria-label="Previous slide">❮</button>
-                        <button class="next" aria-label="Next slide">❯</button>
+                        <button class="prev" aria-label="Previous page">❮</button>
+                        <button class="next" aria-label="Next page">❯</button>
                         
-                        <div class="dots-container">
-                            <span class="dot active-dot" data-index="0" aria-label="Go to slide 1"></span>
-                            <span class="dot" data-index="1" aria-label="Go to slide 2"></span>
-                            <span class="dot" data-index="2" aria-label="Go to slide 3"></span>
-                            <span class="dot" data-index="3" aria-label="Go to slide 4"></span>
-                            <span class="dot" data-index="4" aria-label="Go to slide 5"></span>
+                        <div class="dots-container" id="pdf-pagination">
+                            <!-- Page dots will be generated dynamically -->
+                        </div>
+                        
+                        <div class="pdf-loading">
+                            <p>Loading PDF preview...</p>
+                        </div>
+                        
+                        <div class="pdf-controls">
+                            <span id="current-page">1</span> / <span id="total-pages">?</span>
                         </div>
                     </div>
                 </div>
@@ -356,17 +418,27 @@
                 <div class="book-detail-content">
                     <h1 id="book-title">Book Title</h1>
                     <p class="book-author-large" id="book-author">By Author Name</p>
-                    <p class="book-price-large" id="book-price">₹199</p>
+                    
+                    <!-- Updated pricing section with original price, discount, and sale price -->
+                    <div class="book-price-container">
+                        <div class="price-block">
+                            <span class="original-price">₹<span id="book-original-price">100</span></span>
+                            <span class="sale-price">₹<span id="book-price">20</span></span>
+                        </div>
+                        <div class="discount-badge">80% OFF</div>
+                    </div>
                     
                     <div class="book-actions">
-                        <button class="cta-button primary" id="buy-now-btn">Buy Now</button>
+                        <button class="cta-button primary" id="buy-now-btn">Buy Now - ₹20 Only</button>
+                        <a href="https://chat.whatsapp.com/yourcommunitylinkhere" target="_blank" class="cta-button whatsapp-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                            </svg>
+                            Join WhatsApp Community
+                        </a>
                     </div>
-                    
-                    <div id="detailed-description">
-                        <!-- This is where the detailed content will be inserted -->
-                    </div>
-                    
-                    <table class="book-details-table">
+
+                     <table class="book-details-table">
                         <tr>
                             <th colspan="2">Book Details</th>
                         </tr>
@@ -387,6 +459,11 @@
                             <td><span class="sample-preview-btn" id="view-sample-btn">View Sample Pages</span></td>
                         </tr>
                     </table>
+                    
+                    <div id="detailed-description">
+                        <!-- This is where the detailed content will be inserted -->
+                    </div>
+                    
                 </div>
             </div>
             
@@ -452,7 +529,551 @@
     </footer>
 
     <script src="script.js"></script>
-    <script src="Script/book-detail.js"></script>
-    <script src="Script/mobile-nav.js"></script>
+    <script src="script/book-detail.js"></script>
+    <script src="script/mobile-nav.js"></script>
+    <script src="script/nav-sidebar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        // Set worker source for PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get book ID from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookId = parseInt(urlParams.get('id'));
+            
+            // Book data - will be used to get the correct PDF file
+            const books = [
+                {
+                    id: 1,
+                    title: "Navaratri Limited Edition Prompt Book",
+                    author: "Kalpvruksh",
+                    price: "₹20",
+                    priceAmount: 20,
+                    desc: "A comprehensive guide to prompt engineering for AI.",
+                    pages: "47",
+                    size: "2.4 MB",
+                    sample: "Navaratri Edition-preview.pdf",
+                    category: "prompt",
+                    image: "WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg"
+                },
+                {
+                    id: 2,
+                    title: "AI for Indian Businesses",
+                    author: "Kalpvruksh",
+                    price: "₹299",
+                    priceAmount: 299,
+                    desc: "Strategies and case studies for AI adoption in Indian businesses.",
+                    pages: "98",
+                    size: "1.8 MB",
+                    sample: "navarati-Image- prompt book (1).pdf", // Different PDF for book 2
+                    category: "strategy",
+                    image: ""
+                },
+                {
+                    id: 3,
+                    title: "Sales Automation Playbook",
+                    author: "Kalpvruksh",
+                    price: "₹249",
+                    priceAmount: 249,
+                    desc: "Automate your sales process with proven AI strategies.",
+                    pages: "110",
+                    size: "2.1 MB",
+                    sample: "Sales-Automation-Playbook-sample.pdf", // Different PDF for book 3
+                    category: "sales",
+                    image: ""
+                }
+            ];
+            
+            // Find the current book data
+            const currentBook = books.find(b => b.id === bookId) || books[0];
+            
+            // PDF Slideshow functionality
+            let pdfDoc = null;
+            let pageNum = 1;
+            let pdfRendering = false;
+            const canvas = document.getElementById('pdf-canvas');
+            const ctx = canvas.getContext('2d');
+            const pdfPagination = document.getElementById('pdf-pagination');
+            const currentPageSpan = document.getElementById('current-page');
+            const totalPagesSpan = document.getElementById('total-pages');
+            
+            // Use the book-specific PDF URL - this ensures each book has its own PDF
+            const pdfUrl = currentBook.sample;
+            
+            console.log(`Loading PDF for book ID ${bookId}: ${pdfUrl}`);
+            
+            // Update page title with book name
+            document.title = `${currentBook.title} | Kalpvruksh AI`;
+            
+            // Load the PDF
+            pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+                pdfDoc = pdf;
+                totalPagesSpan.textContent = pdf.numPages;
+                
+                // Clear existing pagination dots
+                pdfPagination.innerHTML = '';
+                
+                // Create pagination dots
+                for (let i = 1; i <= Math.min(pdf.numPages, 10); i++) {
+                    const dot = document.createElement('span');
+                    dot.className = i === 1 ? 'dot active-dot' : 'dot';
+                    dot.setAttribute('data-page', i);
+                    dot.setAttribute('aria-label', `Go to page ${i}`);
+                    dot.addEventListener('click', function() {
+                        pageNum = parseInt(this.getAttribute('data-page'));
+                        renderPage(pageNum);
+                    });
+                    pdfPagination.appendChild(dot);
+                }
+                
+                // Render first page
+                renderPage(pageNum);
+                
+                // Hide loading message
+                document.querySelector('.pdf-loading').style.display = 'none';
+            }).catch(function(error) {
+                console.error('Error loading PDF:', error);
+                document.querySelector('.pdf-loading').textContent = 'Error loading PDF preview. Using fallback.';
+                
+                // Fallback to a default PDF if the specific one fails to load
+                pdfjsLib.getDocument("Navaratri-Limited-Edition-prompt-book_compressed .pdf").promise.then(function(pdf) {
+                    pdfDoc = pdf;
+                    totalPagesSpan.textContent = pdf.numPages;
+                    renderPage(1);
+                    document.querySelector('.pdf-loading').style.display = 'none';
+                }).catch(function(fallbackError) {
+                    console.error('Fallback PDF also failed:', fallbackError);
+                    document.querySelector('.pdf-loading').textContent = 'PDF preview unavailable';
+                });
+            });
+            
+            // Render a page
+            function renderPage(num) {
+                if (pdfRendering) return;
+                pdfRendering = true;
+                
+                // Update pagination dots
+                document.querySelectorAll('.dot').forEach(dot => {
+                    dot.classList.remove('active-dot');
+                    if (parseInt(dot.getAttribute('data-page')) === num) {
+                        dot.classList.add('active-dot');
+                    }
+                });
+                
+                // Update page number display
+                currentPageSpan.textContent = num;
+                
+                // Get the page
+                pdfDoc.getPage(num).then(function(page) {
+                    // Scale the canvas to fit the container
+                    const viewport = page.getViewport({ scale: 1 });
+                    const container = document.querySelector('.pdf-preview-slideshow');
+                    const containerWidth = container.clientWidth;
+                    const scale = containerWidth / viewport.width * 0.9; // 90% of container width
+                    
+                    const scaledViewport = page.getViewport({ scale: scale });
+                    canvas.height = scaledViewport.height;
+                    canvas.width = scaledViewport.width;
+                    
+                    // Render the page
+                    const renderContext = {
+                        canvasContext: ctx,
+                        viewport: scaledViewport
+                    };
+                    
+                    page.render(renderContext).promise.then(function() {
+                        pdfRendering = false;
+                    });
+                });
+            }
+            
+            // Navigation buttons
+            document.querySelector('.prev').addEventListener('click', function() {
+                if (pageNum <= 1) return;
+                pageNum--;
+                renderPage(pageNum);
+            });
+            
+            document.querySelector('.next').addEventListener('click', function() {
+                if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
+                pageNum++;
+                renderPage(pageNum);
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (pdfDoc) renderPage(pageNum);
+            });
+            
+            // Update the book details on the page
+            document.getElementById('book-title').textContent = currentBook.title;
+            document.getElementById('book-author').textContent = `By ${currentBook.author}`;
+            document.getElementById('book-price').textContent = currentBook.price;
+            document.getElementById('book-pages').textContent = currentBook.pages;
+            document.getElementById('book-size').textContent = currentBook.size;
+            
+            // Setup buy now button
+            document.getElementById('buy-now-btn').addEventListener('click', function() {
+                try {
+                    initiatePayment(currentBook.id);
+                } catch(e) {
+                    console.error("Error initiating payment:", e);
+                    alert("Unable to process payment. Please try again later.");
+                }
+            });
+        });
+        
+        // Load book data from local data (in a real app, this would come from an API or server)
+        // ...existing book detail script code...
+        
+        // Add responsive behavior for navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle mobile navigation
+            const mobileToggle = document.querySelector('.mobile-nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const navOverlay = document.querySelector('.nav-overlay');
+            
+            if (mobileToggle && navLinks && navOverlay) {
+                mobileToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    this.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+                    this.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+                });
+                
+                // Close on click outside
+                document.addEventListener('click', function(e) {
+                    if (!navLinks.contains(e.target) && 
+                        !mobileToggle.contains(e.target) && 
+                        navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileToggle.textContent = '☰';
+                        mobileToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+                
+                // Close on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 767 && navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileToggle.textContent = '☰';
+                        mobileToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        // Initialize direct sidebar control
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent default mobile-nav.js from running multiple times
+            window.mobileNavInitialized = window.mobileNavInitialized || false;
+            
+            if (window.mobileNavInitialized) {
+                console.log("Mobile nav already initialized, skipping");
+                return;
+            }
+            
+            window.mobileNavInitialized = true;
+            
+            // Get the mobile navigation elements
+            const mobileToggle = document.querySelector('.mobile-nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            // Get or create the overlay element
+            let navOverlay = document.querySelector('.nav-overlay');
+            if (!navOverlay) {
+                navOverlay = document.createElement('div');
+                navOverlay.className = 'nav-overlay';
+                document.body.appendChild(navOverlay);
+            }
+            
+            // Make sure the overlay is initially hidden
+            navOverlay.style.display = 'none';
+            
+            function openNavigation() {
+                navLinks.classList.add('active');
+                navOverlay.style.display = 'block';
+                
+                // Give a moment for display:block to take effect before adding the active class
+                setTimeout(() => {
+                    navOverlay.classList.add('active');
+                }, 10);
+                
+                mobileToggle.textContent = '✕';
+                mobileToggle.setAttribute('aria-expanded', 'true');
+            }
+            
+            function closeNavigation() {
+                navLinks.classList.remove('active');
+                navOverlay.classList.remove('active');
+                
+                // Wait for the transition to finish before hiding
+                setTimeout(() => {
+                    if (!navLinks.classList.contains('active')) {
+                        navOverlay.style.display = 'none';
+                    }
+                }, 300);
+                
+                mobileToggle.textContent = '☰';
+                mobileToggle.setAttribute('aria-expanded', 'false');
+            }
+            
+            // Toggle navigation when button is clicked
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (navLinks.classList.contains('active')) {
+                        closeNavigation();
+                    } else {
+                        openNavigation();
+                    }
+                });
+            }
+            
+            // Close when clicking overlay
+            navOverlay.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeNavigation();
+            });
+            
+            // Close navigation when clicking nav links
+            if (navLinks) {
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', closeNavigation);
+                });
+            }
+            
+            // Close when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navLinks && navLinks.classList.contains('active') && 
+                    !navLinks.contains(e.target) && 
+                    e.target !== mobileToggle) {
+                    closeNavigation();
+                }
+            });
+            
+            // Close on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && navLinks && navLinks.classList.contains('active')) {
+                    closeNavigation();
+                }
+            });
+        });
+    </script>
+    <!-- Add our dedicated fix script -->
+    <script src="script/fix-sidebar.js"></script>
+
+    <!-- Add an inline script for extra reliability -->
+    <script>
+        // Execute after a short delay to ensure DOM is loaded
+        setTimeout(function() {
+            // Direct fix for nav overlay
+            const navOverlay = document.querySelector('.nav-overlay');
+            if (navOverlay) {
+                // Force hide the overlay
+                navOverlay.style.display = 'none';
+                console.log("Directly forced overlay to hidden state");
+            }
+            
+            // Make sure toggle button works correctly
+            const mobileToggle = document.querySelector('.mobile-nav-toggle');
+            if (mobileToggle) {
+                mobileToggle.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const navLinks = document.querySelector('.nav-links');
+                    const isActive = navLinks.classList.contains('active');
+                    
+                    // Explicitly control the overlay display
+                    if (isActive) {
+                        navLinks.classList.remove('active');
+                        navOverlay.style.display = 'none';
+                        this.textContent = '☰';
+                    } else {
+                        navLinks.classList.add('active');
+                        navOverlay.style.display = 'block';
+                        this.textContent = '✕';
+                    }
+                };
+                console.log("Direct toggle handler attached");
+            }
+        }, 800);
+    </script>
+    <script>
+    // Add Phone Number Input Modal
+    const phoneModalHTML = `
+    <div id="phoneNumberModal" class="modal" style="display:none; z-index: 10001;">
+        <div class="modal-content" style="max-width: 500px; text-align: center; padding: 30px;">
+            <button class="modal-close" id="closePhoneModal" aria-label="Close phone number modal">&times;</button>
+            <h2 style="margin-bottom: 20px;">Enter Your Phone Number</h2>
+            <p style="margin-bottom: 15px; color: var(--secondary-color);">Please enter your phone number to proceed with payment:</p>
+            
+            <div style="display: flex; align-items: center; margin: 0 auto 20px; max-width: 300px;">
+                <span style="font-size: 1.2rem; margin-right: 10px;">+91</span>
+                <input type="tel" id="userPhoneNumber" maxlength="10" pattern="[0-9]{10}" 
+                       style="flex: 1; padding: 12px; font-size: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color);" 
+                       placeholder="Your 10-digit phone number" />
+            </div>
+            
+            <div id="phoneNumberError" style="color: #e53935; margin-bottom: 15px; display: none;">
+                Please enter a valid 10-digit phone number
+            </div>
+            
+            <button id="confirmPhoneNumber" class="cta-button primary" style="width: 100%;">Continue to Payment</button>
+            <p style="margin-top: 15px; font-size: 0.9rem;">
+                Your phone number will be used only for payment verification.
+            </p>
+        </div>
+    </div>`;
+
+    // Add the phone modal to the body
+    document.body.insertAdjacentHTML('beforeend', phoneModalHTML);
+    
+    // Setup buy now button with phone number collection
+    function initiatePayment(bookId) {
+        try {
+            const currentBook = books.find(b => b.id === bookId) || books[0];
+            
+            // Show phone number modal
+            const phoneModal = document.getElementById('phoneNumberModal');
+            const phoneInput = document.getElementById('userPhoneNumber');
+            const errorMessage = document.getElementById('phoneNumberError');
+            
+            // Show the phone number modal
+            phoneModal.style.display = 'flex';
+            phoneInput.focus();
+            
+            // Handle confirm button click
+            document.getElementById('confirmPhoneNumber').onclick = function() {
+                const phoneNumber = phoneInput.value.trim();
+                
+                // Validate Indian phone number (10 digits)
+                if (!/^[6-9]\d{9}$/.test(phoneNumber)) {
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Hide modal and error message
+                errorMessage.style.display = 'none';
+                phoneModal.style.display = 'none';
+                
+                // Now proceed with payment using the phone number
+                processPaymentWithPhone(currentBook, phoneNumber);
+            };
+            
+            // Close modal button
+            document.getElementById('closePhoneModal').onclick = function() {
+                phoneModal.style.display = 'none';
+                errorMessage.style.display = 'none';
+            };
+            
+            // Close when clicking outside
+            phoneModal.onclick = function(e) {
+                if (e.target === phoneModal) {
+                    phoneModal.style.display = 'none';
+                    errorMessage.style.display = 'none';
+                }
+            };
+            
+            // Handle Enter key in input field
+            phoneInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('confirmPhoneNumber').click();
+                }
+            });
+            
+        } catch(e) {
+            console.error("Error initiating payment:", e);
+            alert("Unable to process payment. Please try again later.");
+        }
+    }
+    
+    // Process payment with Razorpay after collecting phone number
+    function processPaymentWithPhone(book, phoneNumber) {
+        // Force book ID 1 to always be 20 rupees
+        const priceAmount = book.id == 1 ? 20 : book.priceAmount;
+        
+        console.log(`Processing payment for "${book.title}" at price: ₹${priceAmount}`);
+        console.log(`Using phone number: ${phoneNumber}`);
+        
+        const options = {
+            key: 'rzp_live_RMvL1ArRi2m0Z9',
+            amount: priceAmount * 100, // Convert to paise
+            currency: 'INR',
+            name: 'Kalpvruksh AI',
+            description: `Purchase: ${book.title} - ₹${priceAmount}`,
+            image: 'WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg',
+            handler: function (response) {
+                console.log("Payment successful:", response);
+                alert("Payment successful! Redirecting to thank you page...");
+                
+                // Store purchase information in localStorage for thankyou.html
+                localStorage.setItem('purchasedBook', JSON.stringify({
+                    id: book.id,
+                    title: book.title,
+                    price: priceAmount,
+                    paymentId: response.razorpay_payment_id
+                }));
+                
+                // Redirect to thank you page with parameters
+                window.location.href = `thankyou.html?order_id=${response.razorpay_payment_id}&book_id=${book.id}`;
+            },
+            prefill: {
+                name: '',
+                email: '',
+                contact: phoneNumber // Use the provided phone number
+            },
+            notes: {
+                address: 'Kalpvruksh AI Office',
+                book_id: book.id
+            },
+            theme: {
+                color: '#2471c9'
+            },
+            modal: {
+                ondismiss: function() {
+                    console.log("Payment modal dismissed");
+                }
+            }
+        };
+        
+        try {
+            // Create a new instance for each payment attempt
+            const rzp = new window.Razorpay(options);
+            
+            // Add event listeners for payment issues
+            rzp.on('payment.failed', function (response) {
+                console.error("Payment failed:", response.error);
+                alert(`Payment failed: ${response.error.description}`);
+            });
+            
+            // Open the payment dialog
+            rzp.open();
+        } catch(error) {
+            console.error("Error opening Razorpay:", error);
+            alert("Could not initialize payment gateway. Please try again later.");
+        }
+    }
+    
+    // Setup buy now button
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('buy-now-btn').addEventListener('click', function() {
+            try {
+                // Get book ID from URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                const bookId = parseInt(urlParams.get('id'));
+                initiatePayment(bookId);
+            } catch(e) {
+                console.error("Error initiating payment:", e);
+                alert("Unable to process payment. Please try again later.");
+            }
+        });
+    });
+</script>
 </body>
 </html>
