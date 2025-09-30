@@ -1,165 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Thank You for Your Purchase | Kalpvruksh AI</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
-    <!-- Add jsPDF library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        .thank-you-section {
-            text-align: center;
-            padding: 80px 20px;
+        .thank-you-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         
         .success-icon {
             width: 80px;
             height: 80px;
-            background-color: #e0f7fa;
+            margin: 0 auto 30px;
+            background-color: #e6f7e9;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 24px;
-            color: var(--primary-button-bg);
+            color: #2e7d32;
             font-size: 40px;
         }
         
         .order-details {
+            margin: 30px auto;
+            max-width: 500px;
             background-color: #f7fcfd;
-            border-radius: 12px;
             padding: 24px;
-            margin: 32px 0;
+            border-radius: 12px;
             text-align: left;
         }
         
-        .order-details h3 {
-            margin-bottom: 16px;
-            color: var(--primary-color);
-        }
-        
-        .order-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        
-        .order-table th {
-            text-align: left;
-            padding: 8px 12px;
+        .order-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
             border-bottom: 1px solid var(--border-color);
-            color: var(--secondary-color);
-            font-weight: 600;
         }
         
-        .order-table td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
+        .order-detail-item:last-child {
+            border-bottom: none;
         }
         
         .download-section {
             margin-top: 40px;
         }
         
-        .download-card {
-            background-color: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .download-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .download-icon {
-            width: 48px;
-            height: 48px;
-            background-color: var(--secondary-button-bg);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-button-bg);
-            font-weight: bold;
-            font-size: 24px;
-        }
-        
         .download-buttons {
             display: flex;
-            gap: 10px;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
         }
         
-        .action-buttons {
-            display: flex;
-            gap: 16px;
-            margin-top: 40px;
-            justify-content: center;
+        .support-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .cta-button {
+            padding: 14px 24px;
+            font-weight: 600;
         }
         
         @media (max-width: 600px) {
-            .download-card {
-                flex-direction: column;
-                text-align: center;
-                gap: 16px;
-            }
-            
-            .download-info {
-                flex-direction: column;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-                gap: 12px;
-            }
-            
-            .action-buttons .cta-button {
-                width: 100%;
+            .thank-you-container {
+                padding: 30px 20px;
+                margin: 20px;
             }
             
             .download-buttons {
                 flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-buttons .cta-button {
                 width: 100%;
-            }
-            
-            .download-buttons button {
-                width: 100%;
-            }
-        }
-        
-        /* Additional responsive styles */
-        @media (max-width: 576px) {
-            .thank-you-section {
-                padding: 50px 16px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .order-details {
-                padding: 16px;
-            }
-            
-            .order-table {
-                font-size: 0.9rem;
-            }
-            
-            .order-table td,
-            .order-table th {
-                padding: 8px;
             }
         }
     </style>
@@ -167,91 +94,98 @@
 <body>
     <header>
         <nav class="container">
-            <a href="#" class="logo-with-whatsapp">
+            <a href="index.html" class="logo-with-whatsapp">
                 <span class="logo-img-wrapper">
                     <img src="WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg" alt="Kalpvruksh AI Logo" class="logo-img">
                 </span>
                 <span class="logo-text">Kalpvruksh AI</span>
             </a>
+            
+            <!-- Mobile navigation toggle button -->
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">☰</button>
+            
             <div class="nav-links">
                 <a href="ebook-store.html">E-Book Store</a>
                 <a href="index.html#how-it-works">How It Works</a>
                 <a href="index.html#pricing">Pricing</a>
                 <a href="index.html#chatbot">AI Chatbot</a>
+                <!-- Add Try Free button for mobile navigation -->
+                <a href="index.html" class="try-free-mobile">Try Free</a>
+                <!-- Add WhatsApp button in the sidebar for mobile -->
+                <a href="https://chat.whatsapp.com/yourcommunitylinkhere" target="_blank" class="whatsapp-nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                        <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                    </svg>
+                    Join WhatsApp Community
+                </a>
             </div>
-            <div class="nav-actions">
+            
+            <div class="nav-actions desktop-only">
                 <a href="login.html" class="login-btn">Log In</a>
-                <a href="index.html" class="cta-button primary">Try Free</a>
+                <a href="index.html" class="cta-button primary try-free-btn">Try Free</a>
             </div>
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
         </nav>
     </header>
 
+    <!-- Add nav overlay div right after header -->
+    <div class="nav-overlay"></div>
+
     <main>
-        <section class="thank-you-section container">
+        <div class="container thank-you-container">
             <div class="success-icon">✓</div>
             <h1>Thank You for Your Purchase!</h1>
-            <p class="subtitle">Your order has been successfully completed.</p>
+            <p style="font-size: 1.1rem; color: var(--secondary-color); margin-bottom: 24px;">
+                Your transaction was successful and your digital product is ready for download.
+            </p>
             
             <div class="order-details">
-                <h3>Order Details</h3>
-                <p><strong>Order Number:</strong> <span id="order-number">kalp-0838</span></p>
-                <p><strong>Date:</strong> <span id="order-date"></span></p>
-                
-                <table class="order-table">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody id="order-items">
-                        <tr>
-                            <td>Kalpvruksh-Navaratri-Edition-Prompt-Book("Limited Edition")</td>
-                            <td>₹100</td>
-                        </tr>
-                        <tr>
-                            <td> Navaratri Discount (80%)</td>
-                            <td>-₹80</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td><strong>Total</strong></td>
-                            <td><strong>₹20</strong></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                
-                <p>A receipt has been sent to your email address.</p>
-            </div>
-            
-            <div class="download-section">
-                <h2>Your Downloads</h2>
-                <p>Your purchases are available for immediate download:</p>
-                
-                <div class="download-card">
-                    <div class="download-info">
-                        <div class="download-icon">PDF</div>
-                        <div>
-                            <h3>Kalpvruksh-Navaratri-Edition-Prompt-Book</h3>
-                            <p>PDF format, 2.4 MB</p>
-                        </div>
-                    </div>
-                    <div class="download-buttons">
-                        <button class="cta-button primary" onclick="downloadExistingPDF('Navaratri-Limited-Edition-prompt-book_compressed.pdf')">Download Book</button>
-                        <button class="cta-button secondary" onclick="generateReceiptPDF()">Download Receipt</button>
-                    </div>
+                <h2 style="margin-bottom: 16px;">Order Details</h2>
+                <div class="order-detail-item">
+                    <span>Product:</span>
+                    <span id="purchased-product-name">Book Name</span>
+                </div>
+                <div class="order-detail-item">
+                    <span>Order ID:</span>
+                    <span id="order-id">ORD12345</span>
+                </div>
+                <div class="order-detail-item">
+                    <span>Amount Paid:</span>
+                    <span id="amount-paid">₹XX</span>
+                </div>
+                <div class="order-detail-item">
+                    <span>Date:</span>
+                    <span id="purchase-date">XX-XX-XXXX</span>
                 </div>
             </div>
             
-            <div class="action-buttons">
-                <a href="ebook-store.html" class="cta-button secondary">Continue Shopping</a>
-                <a href="#" class="cta-button primary" id="view-account-btn">View My Account</a>
+            <div class="download-section">
+                <h2>Your E-Book is Ready!</h2>
+                <p style="margin-bottom: 20px;">Download your purchase or access it via the email we sent you.</p>
+                
+                <div class="download-buttons">
+                    <button class="cta-button primary" id="download-book-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                        </svg>
+                        Download E-Book
+                    </button>
+                    <button class="cta-button secondary" onclick="window.location.href='ebook-store.html'">
+                        Continue Shopping
+                    </button>
+                </div>
             </div>
-        </section>
+            
+            <div class="support-section">
+                <h3 style="margin-bottom: 12px;">Need Help?</h3>
+                <p>
+                    If you have any questions about your purchase or need assistance, 
+                    please <a href="#" style="color: var(--primary-button-bg);">contact our support team</a>.
+                </p>
+            </div>
+        </div>
     </main>
-    
+
     <footer>
         <div class="container footer-grid">
             <div class="footer-col">
@@ -294,114 +228,96 @@
             <p>&copy; 2025 Kalpvruksh AI. All Rights Reserved.</p>
         </div>
     </footer>
-    
+
     <script>
-        // Set current date for the order
         document.addEventListener('DOMContentLoaded', function() {
-            const now = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('order-date').textContent = now.toLocaleDateString('en-IN', options);
-            
-            // Get order details from URL parameters (if available)
+            // Get URL parameters
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('order_id');
-            if (orderId) {
-                document.getElementById('order-number').textContent = orderId;
+            const bookId = urlParams.get('book_id');
+            
+            // Get purchase info from localStorage
+            const purchaseInfo = JSON.parse(localStorage.getItem('purchasedBook')) || {};
+            
+            // Book data - would come from server in a real app
+            const books = [
+                {
+                    id: 1,
+                    title: "Navaratri Limited Edition Prompt Book",
+                    price: 20,
+                    pdfPath: "Navaratri-Limited-Edition-prompt-book_compressed.pdf"
+                },
+                {
+                    id: 2,
+                    title: "AI for Indian Businesses",
+                    price: 299,
+                    pdfPath: "AI-for-Indian-Businesses.pdf"
+                },
+                {
+                    id: 3,
+                    title: "Sales Automation Playbook",
+                    price: 249,
+                    pdfPath: "Sales-Automation-Playbook.pdf"
+                }
+            ];
+            
+            // Find the purchased book
+            const purchasedBook = books.find(book => book.id == bookId) || books[0];
+            
+            // Update page with order details
+            document.getElementById('purchased-product-name').textContent = purchasedBook.title;
+            document.getElementById('order-id').textContent = orderId || 'N/A';
+            document.getElementById('amount-paid').textContent = `₹${purchasedBook.price}`;
+            
+            // Set current date
+            const now = new Date();
+            document.getElementById('purchase-date').textContent = now.toLocaleDateString();
+            
+            // Set up download button
+            document.getElementById('download-book-btn').addEventListener('click', function() {
+                downloadPdf(purchasedBook.pdfPath, purchasedBook.title);
+                this.textContent = 'Download Complete!';
+                setTimeout(() => {
+                    this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>Download E-Book';
+                }, 2000);
+            });
+            
+            // Function to download PDF
+            function downloadPdf(filePath, fileName) {
+                const link = document.createElement('a');
+                link.href = filePath;
+                link.download = fileName.replace(/\s+/g, '-').toLowerCase() + '.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             }
             
-            // Mobile navigation
-            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            // Mobile navigation setup
+            const mobileToggle = document.querySelector('.mobile-nav-toggle');
             const navLinks = document.querySelector('.nav-links');
+            const navOverlay = document.querySelector('.nav-overlay');
             
-            if (mobileNavToggle && navLinks) {
-                mobileNavToggle.addEventListener('click', function() {
+            if (mobileToggle && navLinks) {
+                mobileToggle.addEventListener('click', function() {
                     navLinks.classList.toggle('active');
+                    
+                    if (navLinks.classList.contains('active')) {
+                        navOverlay.style.display = 'block';
+                        this.textContent = '✕';
+                    } else {
+                        navOverlay.style.display = 'none';
+                        this.textContent = '☰';
+                    }
                 });
                 
-                // Close navigation when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (navLinks.classList.contains('active') && 
-                        !navLinks.contains(e.target) && 
-                        !mobileNavToggle.contains(e.target)) {
-                        navLinks.classList.remove('active');
-                    }
+                // Close when clicking the overlay
+                navOverlay.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    this.style.display = 'none';
+                    mobileToggle.textContent = '☰';
                 });
             }
         });
-        
-        // Download existing PDF function
-        function downloadExistingPDF(filename) {
-            const link = document.createElement('a');
-            link.href = filename;
-            link.download = filename;
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Show a success message
-            alert("Your book download has started!");
-        }
-        
-        // Generate and download receipt PDF using jsPDF
-        function generateReceiptPDF() {
-            // Access the jsPDF library
-            const { jsPDF } = window.jspdf;
-            
-            // Create a new PDF document
-            const doc = new jsPDF();
-            
-            // Add content to the PDF
-            doc.setFontSize(22);
-            doc.setTextColor(10, 79, 100); // var(--primary-color)
-            doc.text("Kalpvruksh AI", 105, 20, { align: "center" });
-            
-            doc.setFontSize(18);
-            doc.text("Purchase Receipt", 105, 30, { align: "center" });
-            
-            // Order details
-            doc.setFontSize(14);
-            doc.setTextColor(0, 0, 0);
-            doc.text("Order Details", 20, 50);
-            
-            doc.setFontSize(12);
-            doc.text(`Order Number: 838`, 20, 60);
-            doc.text(`Date: ${document.getElementById('order-date').textContent}`, 20, 70);
-            
-            // Item details
-            doc.text("Item", 20, 90);
-            doc.text("Price", 150, 90);
-            
-            // Draw a line
-            doc.setLineWidth(0.5);
-            doc.line(20, 92, 190, 92);
-            
-            // Add item
-            doc.text("Navaratri-Limited-Edition-prompt-book_compressed.pdf", 20, 100);
-            doc.text("₹100", 150, 100);
-            
-            // Add discount
-            doc.text("Discount (80%)", 20, 110);
-            doc.text("-₹80", 150, 110);
-            
-            // Draw another line
-            doc.line(20, 120, 190, 120);
-            
-            // Total
-            doc.setFont(undefined, 'bold');
-            doc.text("Total", 20, 130);
-            doc.text("₹20", 150, 130);
-            doc.setFont(undefined, 'normal');
-            
-            // Thank you message
-            doc.setFontSize(14);
-            doc.text("Thank you for your purchase!", 105, 150, { align: "center" });
-            doc.setFontSize(12);
-            doc.text("If you have any questions, please contact support@kalpvruksh.ai", 105, 160, { align: "center" });
-            
-            // Save and trigger download
-            doc.save("kalpvruksh_receipt.pdf");
-        }
     </script>
 </body>
 </html>
