@@ -22,26 +22,44 @@
                 </span>
                 <span class="logo-text">Kalpvruksh AI</span>
             </a>
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">☰</button>
             <div class="nav-links">
                 <a href="ebook-store.html" class="active">E-Book Store</a>
                 <a href="index.html#how-it-works">How It Works</a>
                 <a href="index.html#pricing">Pricing</a>
                 <a href="index.html#chatbot">AI Chatbot</a>
+                <a href="login.html" class="mobile-only-link cta-button primary">Log In</a>
             </div>
             <div class="nav-actions">
-                <span id="cart-count" style="margin-right:16px; font-weight:600;">Cart: <span id="cart-items">0</span></span>
-                <a href="login.html" class="login-btn">Log In</a>
+                <a href="login.html" class="login-btn desktop-only cta-button primary">Log In</a>
                 <a href="index.html" class="cta-button primary">Try Free</a>
             </div>
         </nav>
     </header>
 
+    <!-- Add additional CSS for mobile/desktop visibility -->
+    <style>
+        @media (max-width: 767px) {
+            .desktop-only {
+                display: none !important;
+            }
+            .mobile-only-link {
+                display: flex !important;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .mobile-only-link {
+                display: none !important;
+            }
+        }
+    </style>
+
     <main>
 
         <!-- Promotional Banner -->
         <section class="promo-banner container">
-            <p>🔥 Special Offer: Buy 2 e-books, Get 1 FREE! Limited time only.</p>
+            <p>🔥 Special Offer: Navaratri Limited Edition Prompt Book now only ₹20! Limited time only.</p>
         </section>
 
             <!-- Search & Filters -->
@@ -61,13 +79,20 @@
         <section id="featured" class="container">
             <h2>Featured Bestsellers</h2>
             <div class="book-grid">
-                <div class="book-card" data-id="1" data-title="The Prompt Engineer's Handbook" data-author="Alex Chen" data-price="₹199" data-desc="A comprehensive guide to prompt engineering for AI." data-pages="120" data-size="2.4 MB" data-sample="Kalpvruksh%20AI%20-%20Win%20with%20AI-Powered%20Email%20Prompts.pdf" data-category="prompt" tabindex="0">
-                    <div class="book-image-placeholder"></div>
-                    <h3>The Prompt Engineer's Handbook</h3>
+                <div class="book-card" data-id="1" data-title="Nabaratri Edition Prompt book" data-author="Alex Chen" data-price="₹20" data-desc="A comprehensive guide to prompt engineering for AI." data-pages="42" data-size="2.4 MB" data-sample="Kalpvruksh%20AI%20-%20Win%20with%20AI-Powered%20Email%20Prompts.pdf" data-category="prompt" tabindex="0">
+                    <div class="book-cover-container">
+                        <img src="WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg" alt="Nabaratri Edition Prompt book Cover" class="book-cover-image">
+                    </div>
+                    <!-- Add sale pricing display -->
+                    <div class="card-price-container">
+                        <span class="card-original-price">₹100</span>
+                        <span class="card-discount-badge">80%</span>
+                    </div>
+                    <h3>Nabaratri Edition Prompt book</h3>
                     <p class="book-author">By Kalpvruksh</p>
-                    <p class="book-price">₹199</p>
+                    <p class="book-price">₹20</p>
                     <div class="book-buttons">
-                        <button class="cta-button primary buy-now-btn" onclick="initiatePayment(1)">Buy Now</button>
+                        <button class="cta-button primary buy-now-btn" onclick="initiatePayment(1)">Buy Now ₹20 Only</button>
                         <a href="book-detail.html?id=1" class="cta-button secondary">View Details</a>
                     </div>
                 </div>
@@ -213,7 +238,7 @@
                 <div class="modal-buttons">
                     <button class="cta-button primary" id="modalBuyBtn">Buy Now</button>
                     <button class="cta-button secondary" id="modalAddToCartBtn" style="margin-left:8px;">Add to Cart</button>
-                    <button class="cta-button secondary" id="modalDownloadBtn" style="margin-left:8px;">Download Free</button>
+                    <a href="book-detail.html" class="cta-button secondary" id="viewDetailsBtn" style="margin-left:8px; text-align:center;">View Full Details</a>
                 </div>
             </div>
         </div>
@@ -229,6 +254,31 @@
         </div>
     </div>
 
+    <!-- Add a Phone Number Input Modal -->
+    <div id="phoneNumberModal" class="modal" style="display:none; z-index: 10001;">
+        <div class="modal-content" style="max-width: 500px; text-align: center; padding: 30px;">
+            <button class="modal-close" id="closePhoneModal" aria-label="Close phone number modal">&times;</button>
+            <h2 style="margin-bottom: 20px;">Enter Your Phone Number</h2>
+            <p style="margin-bottom: 15px; color: var(--secondary-color);">Please enter your phone number to proceed with payment:</p>
+            
+            <div style="display: flex; align-items: center; margin: 0 auto 20px; max-width: 300px;">
+                <span style="font-size: 1.2rem; margin-right: 10px;">+91</span>
+                <input type="tel" id="userPhoneNumber" maxlength="10" pattern="[0-9]{10}" 
+                       style="flex: 1; padding: 12px; font-size: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color);" 
+                       placeholder="Your 10-digit phone number" />
+            </div>
+            
+            <div id="phoneNumberError" style="color: #e53935; margin-bottom: 15px; display: none;">
+                Please enter a valid 10-digit phone number
+            </div>
+            
+            <button id="confirmPhoneNumber" class="cta-button primary" style="width: 100%;">Continue to Payment</button>
+            <p style="margin-top: 15px; font-size: 0.9rem;">
+                Your phone number will be used only for payment verification.
+            </p>
+        </div>
+    </div>
+
     <script>
     // --- Cart System ---
     let cartCount = 0;
@@ -238,14 +288,14 @@
     const books = [
         {
             id: 1,
-            title: "The Prompt Engineer's Handbook",
-            author: "Alex Chen",
-            price: "₹199",
-            priceAmount: 199,
+            title: "Navaratri Limited Edition Prompt Book",
+            author: "Kalpvruksh",
+            price: "₹20",
+            priceAmount: 20, // Explicitly set to 20 rupees
             desc: "A comprehensive guide to prompt engineering for AI.",
             pages: "120",
             size: "2.4 MB",
-            sample: "Navaratri-Limited-Edition-prompt-book_compressed .pdf", // Fixed PDF path
+            sample: "Navaratri-Limited-Edition-prompt-book_compressed .pdf",
             category: "prompt",
             image: ""
         },
@@ -258,7 +308,7 @@
             desc: "Strategies and case studies for AI adoption in Indian businesses.",
             pages: "98",
             size: "1.8 MB",
-            sample: "Navaratri-Limited-Edition-prompt-book_compressed .pdf", // Fixed PDF path
+            sample: "AI-for-Indian-Businesses-sample.pdf", // Different PDF for book 2
             category: "strategy",
             image: ""
         },
@@ -271,18 +321,11 @@
             desc: "Automate your sales process with proven AI strategies.",
             pages: "110",
             size: "2.1 MB",
-            sample: "Navaratri-Limited-Edition-prompt-book_compressed .pdf", // Fixed PDF path
+            sample: "Sales-Automation-Playbook-sample.pdf", // Different PDF for book 3
             category: "sales",
             image: ""
         }
     ];
-
-    // --- Reviews Storage (in-memory) ---
-    const reviews = {
-        1: [],
-        2: [],
-        3: []
-    };
 
     // --- Modal Logic ---
     function openBookModal(bookId) {
@@ -290,7 +333,10 @@
         document.getElementById('modalTitle').textContent = book.title;
         document.querySelector('.modal-author').textContent = "By " + book.author;
         document.querySelector('.modal-image-placeholder').innerHTML = '<div class="book-image-placeholder"></div>';
+        
+        // Keep the description brief in the modal
         document.querySelector('.modal-description').textContent = book.desc;
+        
         document.getElementById('modalPdfPages').textContent = book.pages;
         document.getElementById('modalPdfSize').textContent = book.size;
         document.getElementById('modalPdfSampleLink').href = book.sample;
@@ -304,31 +350,21 @@
             setTimeout(() => { this.textContent = "Add to Cart"; }, 1200);
         };
         
-        // New Download Button functionality
+        // Download Button functionality - keep simple
         document.getElementById('modalDownloadBtn').onclick = function() {
             downloadPDF("navarati-Image-prompt book (1).pdf");
             this.textContent = "Downloaded!";
             setTimeout(() => { this.textContent = "Download Free"; }, 1500);
         };
         
-        // Render reviews
-        const reviewsList = document.getElementById('modalReviewsList');
-        if (reviewsList) {
-            reviewsList.innerHTML = "";
-            reviews[book.id].forEach(r => {
-                const div = document.createElement('div');
-                div.style.margin = "8px 0";
-                div.innerHTML = `<strong>${r.name}:</strong> <span>${r.text}</span>`;
-                reviewsList.appendChild(div);
-            });
-        }
-        
-        // PDF sample preview
+        // Remove any detailed content generation in the modal
+        // PDF sample preview functionality remains
         document.getElementById('modalPdfSampleLink').onclick = function(e) {
             e.preventDefault();
             const pdfPreviewFrame = document.getElementById('pdf-preview-frame');
             const pdfPreviewModal = document.getElementById('pdf-preview-modal');
-            const book = books.find(b => b.id == this.closest('.modal-content').querySelector('#modalTitle').textContent);
+            const modalTitle = document.querySelector('#modalTitle').textContent;
+            const book = books.find(b => b.title === modalTitle);
             
             console.log("Opening sample PDF:", book.sample);
             
@@ -443,57 +479,122 @@
                 return;
             }
             
-            // Convert price string to number and ensure it's a valid amount
-            let priceAmount = book.priceAmount || 199; // Default to 199 if not set
+            // Show phone number modal
+            const phoneModal = document.getElementById('phoneNumberModal');
+            const phoneInput = document.getElementById('userPhoneNumber');
+            const errorMessage = document.getElementById('phoneNumberError');
             
-            const options = {
-                key: 'rzp_live_RMvL1ArRi2m0Z9',
-                amount: priceAmount * 100, // Amount in smallest currency unit (paise for INR)
-                currency: 'INR',
-                name: 'Kalpvruksh AI',
-                description: `Purchase: ${book.title}`,
-                image: 'WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg',
-                handler: function (response) {
-                    console.log("Payment successful:", response);
-                    alert("Payment successful! Redirecting to thank you page...");
-                    window.location.href = `thankyou.html?order_id=${response.razorpay_payment_id}&book_id=${bookId}`;
-                },
-                prefill: {
-                    name: '',
-                    email: '',
-                    contact: ''
-                },
-                notes: {
-                    address: 'Kalpvruksh AI Office',
-                    book_id: bookId
-                },
-                theme: {
-                    color: '#2471c9'
-                },
-                modal: {
-                    ondismiss: function() {
-                        console.log("Payment modal dismissed");
-                    }
+            // Show the phone number modal
+            phoneModal.style.display = 'flex';
+            phoneInput.focus();
+            
+            // Handle confirm button click
+            document.getElementById('confirmPhoneNumber').onclick = function() {
+                const phoneNumber = phoneInput.value.trim();
+                
+                // Validate Indian phone number (10 digits)
+                if (!/^[6-9]\d{9}$/.test(phoneNumber)) {
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                // Hide modal and error message
+                errorMessage.style.display = 'none';
+                phoneModal.style.display = 'none';
+                
+                // Now proceed with payment using the phone number
+                processPaymentWithPhone(book, phoneNumber);
+            };
+            
+            // Close modal button
+            document.getElementById('closePhoneModal').onclick = function() {
+                phoneModal.style.display = 'none';
+                errorMessage.style.display = 'none';
+            };
+            
+            // Close when clicking outside
+            phoneModal.onclick = function(e) {
+                if (e.target === phoneModal) {
+                    phoneModal.style.display = 'none';
+                    errorMessage.style.display = 'none';
                 }
             };
             
-            console.log("Razorpay options:", options);
-            
-            // Create a new instance for each payment attempt
-            const rzp = new window.Razorpay(options);
-            
-            // Add event listeners for payment issues
-            rzp.on('payment.failed', function (response){
-                console.error("Payment failed:", response.error);
-                alert(`Payment failed: ${response.error.description}`);
+            // Handle Enter key in input field
+            phoneInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('confirmPhoneNumber').click();
+                }
             });
             
-            // Open the payment dialog
-            rzp.open();
+            // Auto-format phone number as user types
+            phoneInput.addEventListener('input', function(e) {
+                // Remove any non-digit characters
+                this.value = this.value.replace(/\D/g, '');
+                
+                // Keep only the first 10 digits
+                if (this.value.length > 10) {
+                    this.value = this.value.substring(0, 10);
+                }
+            });
         } catch (error) {
             console.error("Error initiating payment:", error);
             alert("Could not initialize payment. Please try again later.");
         }
+    }
+    
+    // Function to handle the actual payment process with phone number
+    function processPaymentWithPhone(book, phoneNumber) {
+        // Force book ID 1 to always be 20 rupees
+        const priceAmount = book.id == 1 ? 20 : book.priceAmount;
+        
+        console.log(`Processing payment for "${book.title}" at price: ₹${priceAmount}`);
+        console.log(`Using phone number: ${phoneNumber}`);
+        
+        const options = {
+            key: 'rzp_live_RMvL1ArRi2m0Z9',
+            amount: priceAmount * 100, // Convert to paise
+            currency: 'INR',
+            name: 'Kalpvruksh AI',
+            description: `Purchase: ${book.title} - ₹${priceAmount}`,
+            image: 'WhatsApp Image 2025-08-20 at 18.09.23_47dfe0a0.jpg',
+            handler: function (response) {
+                console.log("Payment successful:", response);
+                alert("Payment successful! Redirecting to thank you page...");
+                window.location.href = `thankyou.html?order_id=${response.razorpay_payment_id}&book_id=${book.id}`;
+            },
+            prefill: {
+                name: '',
+                email: '',
+                contact: phoneNumber // Use the provided phone number
+            },
+            notes: {
+                address: 'Kalpvruksh AI Office',
+                book_id: book.id
+            },
+            theme: {
+                color: '#2471c9'
+            },
+            modal: {
+                ondismiss: function() {
+                    console.log("Payment modal dismissed");
+                }
+            }
+        };
+        
+        console.log("Razorpay options:", options);
+        
+        // Create a new instance for each payment attempt
+        const rzp = new window.Razorpay(options);
+        
+        // Add event listeners for payment issues
+        rzp.on('payment.failed', function (response){
+            console.error("Payment failed:", response.error);
+            alert(`Payment failed: ${response.error.description}`);
+        });
+        
+        // Open the payment dialog
+        rzp.open();
     }
 
     // Make sure the Razorpay object is loaded before trying to use it
@@ -523,6 +624,7 @@
     </script>
     <script src="script/mobile-nav.js"></script>
     <script src="script/book-detail.js"></script>
+    <script src="script/nav-sidebar.js"></script>
 </body>
 </html>
 
