@@ -31,59 +31,95 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
+    
 }
 
-/* Header & Navigation */
+/* Header & Navigation - Adjusted Height */
 header {
     background: var(--background-color);
-    padding: 0; /* Remove extra vertical padding from header */
+    padding: 0;
     border-bottom: 1px solid var(--border-color);
-    position: sticky; top: 0; z-index: 1000;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    height: 64px; /* Reduced height to match ebook-store.html */
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-height: 72px; /* Ensure enough height for logo and buttons */
-    padding: 6px 0;  /* Add vertical padding for nav content */
+    min-height: 64px; /* Reduced height to match ebook-store.html */
+    height: 64px; /* Fixed height */
+    padding: 0; /* Remove padding to reduce height */
 }
 
 .nav-links {
     display: flex;
-    gap: 24px; /* Slightly reduce gap for better fit */
-    margin-left: 32px; /* Add left margin to separate from logo */
+    gap: 24px; 
+    margin-left: auto;
+    margin-right: 24px;
 }
 
 .nav-links a {
     color: var(--secondary-color);
     text-decoration: none;
     font-weight: 600;
-    transition: color 0.3s;
-    padding: 8px 12px; /* Add padding for clickable area */
-    border-radius: 6px;
-    font-size: 0.95rem; /* Make nav font smaller */
+    transition: all 0.3s;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    position: relative;
+    white-space: nowrap; /* Prevent text wrapping */
+    display: flex;
+    align-items: center;
 }
 
 .nav-links a:hover {
     color: var(--primary-color);
-    background: var(--secondary-button-bg); /* Subtle hover background */
+    background: var(--secondary-button-bg);
+}
+
+.nav-links a.active {
+    color: var(--primary-button-bg);
+    background-color: var(--secondary-button-bg);
+    font-weight: 700;
+}
+
+/* Login Button Enhancements */
+.login-btn {
+    font-weight: 600;
+    color: var(--secondary-color);
+    text-decoration: none;
+    padding: 9px 18px; /* Increased padding */
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    display: inline-flex;
+    align-items: center;
+}
+
+.login-btn:hover {
+    background-color: var(--primary-button-bg);
+    color: var(--primary-button-bg);
+    border-color: transparent;
+}
+
+.login-btn svg, 
+.login-btn img {
+    margin-right: 6px;
+    height: 16px;
+    width: 16px;
 }
 
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 12px; /* Reduce gap for compactness */
-    margin-right: 8px; /* Add right margin for spacing from edge */
-}
-
-.login-btn {
-    font-weight: 600;
-    color: var(--secondary-color);
-    text-decoration: none;
-    padding: 8px 12px; /* Add padding for clickable area */
-    border-radius: 6px;
-    font-size: 0.95rem; /* Make nav font smaller */
+    gap: 16px; /* Increased gap */
+    margin-right: 0; /* Removed right margin */
 }
 
 /* Logo with image and text */
@@ -98,22 +134,22 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 48px;
-    width: 48px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     background: #e0f7fa; /* subtle background for logo image */
     overflow: hidden;
 }
 
 .logo-img {
-    height: 40px;
-    width: 40px;
+    height: 34px;
+    width: 34px;
     object-fit: contain;
     display: block;
 }
 
 .logo-text {
-    font-size: 1.75rem;
+    font-size: 1rem; /* Slightly smaller font */
     font-weight: 800;
     color: var(--primary-color);
     letter-spacing: 1px;
@@ -138,6 +174,36 @@ nav {
 .cta-button.primary:hover { background-color: var(--primary-button-hover); }
 .cta-button.secondary { background-color: var(--secondary-button-bg); color: var(--secondary-button-text); }
 .cta-button.secondary:hover { background-color: #cbeef3; }
+
+/* WhatsApp Button Style */
+.cta-button.whatsapp-button {
+    background-color: #25D366; /* WhatsApp brand color */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.cta-button.whatsapp-button:hover {
+    background-color: #128C7E; /* Darker WhatsApp green on hover */
+}
+
+/* WhatsApp Button in Navigation */
+.whatsapp-nav-link {
+    color: #25D366 !important; /* WhatsApp brand color */
+    border-top: 1px solid var(--border-color);
+    margin-top: 8px !important;
+    font-weight: 600;
+}
+
+.whatsapp-nav-link svg {
+    margin-right: 10px;
+}
+
+.whatsapp-nav-link:hover {
+    background-color: rgba(37, 211, 102, 0.1) !important; /* Lighter WhatsApp green on hover */
+}
 
 /* Hero Section */
 #hero {
@@ -315,6 +381,30 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
 .book-buttons .cta-button.secondary {
     background-color: transparent;
     border: 1px solid var(--border-color);
+}
+
+/* Book Cover Image Styles */
+.book-cover-container {
+    height: 180px;
+    width: 140px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.book-card:hover .book-cover-image {
+    transform: scale(1.05);
 }
 
 /* Filters Section */
@@ -745,6 +835,60 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     font-weight: 600;
 }
 
+/* Updated pricing display with original and sale price */
+.book-price-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 15px;
+}
+
+.price-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.original-price {
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+    text-decoration: line-through;
+    position: relative;
+}
+
+.original-price::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ff4c4c;
+    top: 50%;
+    left: 0;
+    transform: rotate(-10deg);
+}
+
+.sale-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #e53935; /* Sale red color */
+}
+
+.discount-badge {
+    background-color: #e53935;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .book-price-container {
+        justify-content: center;
+    }
+}
+
 /* Enhanced Responsive Styles */
 /* Mobile Navigation */
 .mobile-nav-toggle {
@@ -755,6 +899,26 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     color: var(--primary-color);
     cursor: pointer;
     padding: 8px;
+}
+
+/* Mobile visible login button */
+.mobile-visible-login {
+    display: none; /* Hidden by default on desktop */
+    font-weight: 600;
+    color: var(--secondary-color);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    align-items: center;
+}
+
+.mobile-visible-login:hover {
+    background-color: var(--secondary-button-bg);
+    color: var(--primary-button-bg);
 }
 
 /* Make PDF preview more responsive */
@@ -795,61 +959,57 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
     }
     
     .nav-links {
-        position: absolute;
-        top: 72px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100vh;
         background: white;
-        padding: 0;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        z-index: 100;
-        border-bottom: 1px solid var(--border-color);
-        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 70px 0 20px 0;
+        z-index: 1100;
+        transition: left 0.3s ease;
+        box-shadow: none;
+        overflow-y: auto;
     }
     
     .nav-links.active {
-        display: flex;
+        left: 0;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
     
     .nav-links a {
-        padding: 15px;
-        text-align: center;
         width: 100%;
+        padding: 16px 24px;
+        text-align: left;
+        border-radius: 0;
         border-bottom: 1px solid var(--border-color);
+        margin: 0;
     }
     
     .nav-links a:last-child {
         border-bottom: none;
     }
     
-    .nav-actions {
-        margin-left: auto;
-        flex-wrap: nowrap;
-    }
-    
-    /* Improve mobile toggle button */
+    /* Enhanced mobile toggle */
     .mobile-nav-toggle {
         display: block;
-        order: 3;
-        margin-left: 10px;
-        padding: 8px;
-        font-size: 1.8rem;
-        z-index: 101;
+        z-index: 1200;
+        margin-left: auto;
+        margin-right: 16px;
     }
     
-    /* Fix for cart count on mobile */
-    #cart-count {
-        font-size: 0.85rem;
-        margin-right: 5px !important;
+    /* Ensure nav actions are properly aligned */
+    .nav-actions {
+        margin-left: 0;
     }
 }
 
 @media (max-width: 500px) {
     /* Very small screens need additional adjustments */
     .logo-text {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     .logo-img-wrapper {
@@ -903,51 +1063,53 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
         width: 100%;
     }
 }
-    .nav-actions {
-        gap: 8px;
+
+/* Fix mobile sidebar issues */
+@media (max-width: 767px) {
+    /* Improved navigation styling */
+    .nav-links {
+        margin-left: 0; /* Remove margin that might push links offscreen */
+        gap: 0; /* Remove gap in mobile view */
+        transition: left 0.3s ease; /* Smooth transition */
     }
     
-    .login-btn, 
-    .cta-button.primary {
+    .nav-links a {
+        padding: 16px 24px;
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .nav-links a.active {
+        background-color: var(--secondary-button-bg);
+        color: var(--primary-button-bg);
+    }
+    
+    .nav-links a:hover {
+        background-color: var(--secondary-button-bg);
+    }
+    
+    /* Ensure mobile toggle is visible and clickable */
+    .mobile-nav-toggle {
+        display: block;
+        cursor: pointer;
+        margin-left: 15px;
+        z-index: 1200;
+        transition: all 0.3s;
         padding: 8px 12px;
-        font-size: 0.9rem;
+        border-radius: 4px;
     }
     
-    /* Content spacing */
-    #hero {
-        padding: 60px 0;
+    .mobile-nav-toggle:hover {
+        background-color: rgba(0,0,0,0.05);
     }
     
-    .container {
-        padding: 0 16px;
+    .mobile-nav-toggle:focus {
+        outline: 2px solid var(--primary-button-bg);
     }
-    
-    /* Book cards */
-    .book-card {
-        padding: 16px;
-    }
-    
-    /* Modal adjustments */
-    .modal-content {
-        padding: 20px 16px;
-    }
-    
-    .modal-buttons {
-        flex-direction: column;
-    }
-    
-    .modal-buttons button {
-        margin-left: 0 !important;
-        margin-top: 8px;
-    }
-    
-    /* Login page */
-    .login-container {
-        padding: 24px 16px;
-    }
-    
-    /* Thank you page */
-    .download-card {
+}
+
+/* Download Page Styles */
+.download-card {
         flex-direction: column;
         text-align: center;
         gap: 16px;
@@ -1009,4 +1171,254 @@ footer { background-color: #f7fcfd; padding-top: 80px; color: var(--secondary-co
         width: 100%;
     }
 }
+
+/* Fixed nav overlay behavior */
+.nav-overlay {
+    display: none; /* Changed from 'contents' to 'none' */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+}
+
+/* Critical fixed nav overlay styles */
+.nav-overlay {
+    display: none !important; /* Use !important to override any other styles */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    cursor: pointer;
+}
+
+/* Only show overlay when explicitly set by JavaScript */
+.nav-overlay[style*="display: block"] {
+    display: block !important;
+}
+
+/* Mobile Navigation Improvements */
+@media (max-width: 767px) {
+    /* ...existing media query styles... */
+
+    /* Ensure sidebar appears correctly */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 70px 0 20px 0;
+        z-index: 1100;
+        transition: left 0.3s ease;
+        box-shadow: none;
+        overflow-y: auto;
+    }
+    
+    /* Active state - bring sidebar in view */
+    .nav-links.active {
+        left: 0;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    /* ...existing code... */
+}
+@media (max-width: 768px) {
+    .book-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .book-actions .cta-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Mobile Navigation Adjustments */
+@media (max-width: 767px) {
+    /* Mobile visible login button */
+    .mobile-visible-login {
+        display: inline-flex;
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
+    /* Header layout for mobile */
+    nav.container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+    }
+    
+    /* Logo takes less space */
+    .logo-with-whatsapp {
+        flex: 0 0 auto;
+    }
+    
+    /* Mobile toggle button */
+    .mobile-nav-toggle {
+        z-index: 1200;
+        display: block;
+        order: 3;
+    }
+    
+    /* Desktop elements hidden on mobile */
+    .desktop-only {
+        display: none !important;
+    }
+    
+    /* Move header to fixed position */
+    header {
+        position: fixed;
+        width: 100%;
+    }
+    
+    /* Add padding to main content to account for fixed header */
+    main {
+        padding-top: 64px;
+    }
+    
+    /* Sidebar navigation positioning */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 70px;
+        transition: left 0.3s ease;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        z-index: 1100;
+    }
+    
+    .nav-links.active {
+        left: 0;
+    }
+
+    /* Make the WhatsApp button in the sidebar more visible */
+    .whatsapp-nav-link {
+        background-color: rgba(37, 211, 102, 0.1);
+        border-top: 1px solid var(--border-color);
+        margin-top: 10px;
+        font-weight: 600;
+    }
+    
+    /* Keep WhatsApp button in book actions visible on mobile */
+    .cta-button.whatsapp-button {
+        display: flex;
+        margin-top: 10px;
+    }
+    
+    /* Fix book actions layout on mobile */
+    .book-actions {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .book-actions .cta-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Fix for Try Free button in navigation */
+.try-free-btn {
+    width: auto;
+    white-space: nowrap;
+    padding: 10px 20px;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.try-free-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Mobile try free button styling */
+.try-free-mobile {
+    background-color: var(--primary-button-bg) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.try-free-mobile:hover {
+    background-color: var(--primary-button-hover) !important;
+}
+
+/* Make sure nav-actions is properly displayed */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-right: 0;
+}
+
+/* Ensure try-free button is responsive */
+@media (max-width: 767px) {
+    .try-free-mobile {
+        display: flex;
+        justify-content: center;
+        width: calc(100% - 48px) !important; /* Account for padding */
+        margin-left: 24px !important;
+        margin-right: 24px !important;
+        text-align: center;
+    }
+    
+    /* Make sure desktop-only items are properly hidden */
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+/* Phone Number Modal Styling */
+#phoneNumberModal .modal-content {
+    animation: fadeInScale 0.3s ease-out;
+}
+
+#userPhoneNumber:focus {
+    border-color: var(--primary-button-bg);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(36, 113, 201, 0.2);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 
